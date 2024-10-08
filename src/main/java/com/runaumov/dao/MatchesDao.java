@@ -24,7 +24,16 @@ public class MatchesDao implements Dao<Match> {
                 .getResultList();
     }
 
-    public List<Match> findByName(String name) {
+    @Override
+    public List<Match> findAllWithPagination(int offset, int pageSize) {
+        @Cleanup Session session = sessionFactory.openSession();
+        return session.createQuery("SELECT m FROM Match m", Match.class)
+                .setFirstResult(offset)
+                .setMaxResults(pageSize)
+                .getResultList();
+    }
+
+    public List<Match> findByName(String name, int offset, int pageSize) {
         @Cleanup Session session = sessionFactory.openSession();
 
         Player player = session.createQuery(
@@ -40,6 +49,30 @@ public class MatchesDao implements Dao<Match> {
         return session.createQuery(
                 "SELECT m FROM Match m WHERE m.player1Id = :player OR m.player2Id = :player", Match.class)
                 .setParameter("player", player)
+                .setFirstResult(offset)
+                .setMaxResults(pageSize)
                 .list();
+    }
+
+    public long countByName(String playerName) {
+
+        @Cleanup Session session = sessionFactory.openSession();
+        Player player = session.createQuery("SELECT p FROM Player p WHERE p.name = :name", Player.class)
+                .setParameter("name", playerName)
+                .uniqueResult();
+
+        if (player == null) {
+            return 0;
+        }
+
+        return session.createQuery("SELECT COUNT(m) FROM Match m WHERE m.player1Id = :player OR m.player2Id = :player", Long.class)
+                .setParameter("player", player)
+                .getSingleResult();
+    }
+
+    public long countAll() {
+        @Cleanup Session session = sessionFactory.openSession();
+        return session.createQuery("SELECT COUNT(m) FROM Match m", Long.class)
+                .getSingleResult();
     }
 }

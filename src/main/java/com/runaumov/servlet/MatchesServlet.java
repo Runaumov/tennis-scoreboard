@@ -41,17 +41,22 @@ public class MatchesServlet extends HttpServlet {
         // TODO: подумать над именем переменной
         // TODO: потом вынести в отдельный класс-валидатор
         int pageNum = (page != null) ? Integer.parseInt(page) : 1;
+        int pageSize = 2;
+
         RequestMatchesDto requestMatchesDto = new RequestMatchesDto(playerName, pageNum);
 
-
-        List<Match> matches = matchesService.getPlayers(requestMatchesDto);
+        List<Match> matches = matchesService.getPlayers(requestMatchesDto, pageNum, pageSize);
 
         List<ResponseMatchesDto> responseMatchesDto = new ArrayList<>();
         for (Match match : matches) {
             responseMatchesDto.add(modelMapper.map(match, ResponseMatchesDto.class));
         }
 
+        int totalPages = matchesService.getTotalPages(pageSize, playerName);
         req.setAttribute("matches", responseMatchesDto);
+        req.setAttribute("currentPage", pageNum);
+        req.setAttribute("totalPages", totalPages);
+
         req.getRequestDispatcher("/table.jsp").forward(req, resp);
 
     }

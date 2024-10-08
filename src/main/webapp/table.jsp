@@ -47,5 +47,19 @@
     <button type="submit">Filter</button>
 </form>
 
+<div class="pagination">
+    <c:if test="${currentPage > 1}">
+        <a href="?page=${currentPage - 1}">&laquo; Предыдущая</a>
+    </c:if>
+
+    <c:forEach var="i" begin="1" end="${totalPages}">
+        <a href="?page=${i}" class="${i == currentPage ? 'active' : ''}">${i}</a>
+    </c:forEach>
+
+    <c:if test="${currentPage < totalPages}">
+        <a href="?page=${currentPage + 1}">Следующая &raquo;</a>
+    </c:if>
+</div>
+
 </body>
 </html>
