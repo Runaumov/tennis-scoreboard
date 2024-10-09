@@ -6,5 +6,4 @@ public interface Dao<E> {
 
     List<E> findAll();
 
-    List<E> findAllWithPagination(int offset, int pageSize);
-}
+    }

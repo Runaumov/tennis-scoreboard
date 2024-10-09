@@ -11,11 +11,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.modelmapper.ModelMapper;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @WebServlet("/matches")
 public class MatchesServlet extends HttpServlet {

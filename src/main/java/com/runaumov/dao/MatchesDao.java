@@ -24,7 +24,6 @@ public class MatchesDao implements Dao<Match> {
                 .getResultList();
     }
 
-    @Override
     public List<Match> findAllWithPagination(int offset, int pageSize) {
         @Cleanup Session session = sessionFactory.openSession();
         return session.createQuery("SELECT m FROM Match m", Match.class)
@@ -47,7 +46,7 @@ public class MatchesDao implements Dao<Match> {
         }
 
         return session.createQuery(
-                "SELECT m FROM Match m WHERE m.player1Id = :player OR m.player2Id = :player", Match.class)
+                        "SELECT m FROM Match m WHERE m.player1Id = :player OR m.player2Id = :player", Match.class)
                 .setParameter("player", player)
                 .setFirstResult(offset)
                 .setMaxResults(pageSize)
