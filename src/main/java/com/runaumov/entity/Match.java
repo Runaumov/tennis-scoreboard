@@ -1,11 +1,10 @@
 package com.runaumov.entity;
 
+import com.runaumov.MatchScore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -29,4 +28,14 @@ public class Match {
     @ManyToOne
     @JoinColumn(name = "winner", referencedColumnName = "id")
     private Player winner;
+
+    @Transient
+    private MatchScore matchScore;
+
+    // TODO: возможно стоит использовать @RequiredArgsConstructor
+    public Match(Player player1Id, Player player2Id, MatchScore matchScore) {
+        this.player1Id = player1Id;
+        this.player2Id = player2Id;
+        this.matchScore = matchScore;
+    }
 }
