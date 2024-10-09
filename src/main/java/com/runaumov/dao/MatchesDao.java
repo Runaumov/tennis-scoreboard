@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MatchesDao implements Dao<Match> {
 
-    private final SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+    private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     @Override
     public List<Match> findAll() {
