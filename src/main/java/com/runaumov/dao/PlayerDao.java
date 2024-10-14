@@ -19,7 +19,7 @@ public class PlayerDao implements Dao<Player> {
                 .setParameter("name", name)
                 .uniqueResult();
 
-        return Optional.of(player);
+        return Optional.ofNullable(player);
     }
 
     @Override

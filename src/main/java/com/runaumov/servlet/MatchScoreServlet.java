@@ -16,7 +16,7 @@ import java.util.UUID;
 public class MatchScoreServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String matchIdParam = req.getParameter("uuid");
         UUID matchId = UUID.fromString(matchIdParam);
 
@@ -26,5 +26,10 @@ public class MatchScoreServlet extends HttpServlet {
         req.setAttribute("match", newMatch);
         req.setAttribute("uuid", matchIdParam);
         req.getRequestDispatcher("match-score.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPost(req, resp);
     }
 }

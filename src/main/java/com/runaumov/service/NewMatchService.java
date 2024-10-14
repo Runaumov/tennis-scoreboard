@@ -13,7 +13,7 @@ import java.util.*;
 public class NewMatchService {
 
     private final PlayerDao playerDao = new PlayerDao();
-    @Getter private Map<UUID, Match> beginingMatches = new HashMap<>();
+    private Map<UUID, Match> beginingMatches = new HashMap<>();
 
     public UUID initMatch(RequestNewMatchDto requestNewMatchDto) {
         Player player1 = getPlayer(requestNewMatchDto.getPlayer1Name());
