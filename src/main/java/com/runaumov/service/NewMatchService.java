@@ -3,6 +3,7 @@ package com.runaumov.service;
 import com.runaumov.GameScore;
 import com.runaumov.MatchScore;
 import com.runaumov.dao.PlayerDao;
+import com.runaumov.dto.RequestNewMatchDto;
 import com.runaumov.entity.Match;
 import com.runaumov.entity.Player;
 
@@ -13,9 +14,9 @@ public class NewMatchService {
     private final PlayerDao playerDao = new PlayerDao();
     private Map<UUID, Match> beginingMatches = new HashMap<>();
 
-    public void initMatch(String player1Name, String player2Name) {
-        Player player1 = getPlayer(player1Name);
-        Player player2 = getPlayer(player2Name);
+    public UUID initMatch(RequestNewMatchDto requestNewMatchDto) {
+        Player player1 = getPlayer(requestNewMatchDto.getPlayer1Name());
+        Player player2 = getPlayer(requestNewMatchDto.getPlayer2Name());
 
         // TODO: рассмотреть варик создания отдельного метода
         MatchScore matchScore = MatchScore.builder()
@@ -31,6 +32,11 @@ public class NewMatchService {
 
         UUID matchId = UUID.randomUUID();
         beginingMatches.put(matchId, match);
+        return matchId;
+    }
+
+    public Match getMatchById(UUID matchId) {
+        return beginingMatches.get(matchId);
     }
 
     // TODO: подумать над player.get()
