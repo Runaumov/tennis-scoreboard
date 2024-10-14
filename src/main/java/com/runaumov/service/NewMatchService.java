@@ -6,13 +6,14 @@ import com.runaumov.dao.PlayerDao;
 import com.runaumov.dto.RequestNewMatchDto;
 import com.runaumov.entity.Match;
 import com.runaumov.entity.Player;
+import lombok.Getter;
 
 import java.util.*;
 
 public class NewMatchService {
 
     private final PlayerDao playerDao = new PlayerDao();
-    private Map<UUID, Match> beginingMatches = new HashMap<>();
+    @Getter private Map<UUID, Match> beginingMatches = new HashMap<>();
 
     public UUID initMatch(RequestNewMatchDto requestNewMatchDto) {
         Player player1 = getPlayer(requestNewMatchDto.getPlayer1Name());

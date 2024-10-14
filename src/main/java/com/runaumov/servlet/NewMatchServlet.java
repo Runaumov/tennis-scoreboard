@@ -29,6 +29,5 @@ public class NewMatchServlet extends HttpServlet {
 
         resp.sendRedirect(req.getContextPath() + MATCH_SCORE_PATH + matchId);
 
-
     }
 }
