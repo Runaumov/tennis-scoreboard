@@ -2,18 +2,16 @@ package com.runaumov.service;
 
 import com.runaumov.GameScore;
 import com.runaumov.MatchScore;
+import com.runaumov.MatchStorage;
 import com.runaumov.dao.PlayerDao;
 import com.runaumov.dto.RequestNewMatchDto;
 import com.runaumov.entity.Match;
 import com.runaumov.entity.Player;
-import lombok.Getter;
-
 import java.util.*;
 
 public class NewMatchService {
 
     private final PlayerDao playerDao = new PlayerDao();
-    private Map<UUID, Match> beginingMatches = new HashMap<>();
 
     public UUID initMatch(RequestNewMatchDto requestNewMatchDto) {
         Player player1 = getPlayer(requestNewMatchDto.getPlayer1Name());
@@ -32,12 +30,8 @@ public class NewMatchService {
                 .build();
 
         UUID matchId = UUID.randomUUID();
-        beginingMatches.put(matchId, match);
+        MatchStorage.getInstance().addMatch(matchId, match);
         return matchId;
-    }
-
-    public Match getMatchById(UUID matchId) {
-        return beginingMatches.get(matchId);
     }
 
     // TODO: подумать над player.get()

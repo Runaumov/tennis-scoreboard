@@ -1,5 +1,6 @@
 package com.runaumov.servlet;
 
+import com.runaumov.MatchStorage;
 import com.runaumov.entity.Match;
 import com.runaumov.service.MatchesService;
 import com.runaumov.service.NewMatchService;
@@ -21,15 +22,18 @@ public class MatchScoreServlet extends HttpServlet {
         UUID matchId = UUID.fromString(matchIdParam);
 
         NewMatchService matchService = new NewMatchService();
-        Match newMatch = matchService.getMatchById(matchId);
+        Match newMatch = MatchStorage.getInstance().getMatchById(matchId);
 
+        // TODO: неправильно, тут передается модель, а надо DTO
         req.setAttribute("match", newMatch);
         req.setAttribute("uuid", matchIdParam);
         req.getRequestDispatcher("match-score.jsp").forward(req, resp);
     }
 
+    // TODO: написать
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        String playerId = req.getParameter("winnerID");
+        int a = 1;
     }
 }

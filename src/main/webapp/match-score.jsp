@@ -20,22 +20,22 @@
         <th>Player 2</th>
     </tr>
     <tr>
-        <td>${match.player1.name}</td>
-        <td>${match.player2.name}</td>
+        <td>${match.getPlayer1Id()}</td>
+        <td>${match.getPlayer2Id()}</td>
     </tr>
-    <tr>
+    <!--<tr>
         <td>${match.player1Score}</td>
         <td>${match.player2Score}</td>
-    </tr>
+    </tr>-->
 </table>
 
 <form action="${pageContext.request.contextPath}/match-score?uuid=${param.uuid}" method="POST">
-    <input type="hidden" name="winnerId" value="${match.player1.id}">
+    <input type="hidden" name="winnerId" value="${match.getPlayer1Id()}">
     <button type="submit">Player 1 Wins Point</button>
 </form>
 
 <form action="${pageContext.request.contextPath}/match-score?uuid=${param.uuid}" method="POST">
-    <input type="hidden" name="winnerId" value="${match.player2.id}">
+    <input type="hidden" name="winnerId" value="${match.getPlayer2Id()}">
     <button type="submit">Player 2 Wins Point</button>
 </form>
 </body>
