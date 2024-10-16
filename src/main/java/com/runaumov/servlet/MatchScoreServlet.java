@@ -1,6 +1,7 @@
 package com.runaumov.servlet;
 
 import com.runaumov.MatchStorage;
+import com.runaumov.dto.ResponseMatchScoreDto;
 import com.runaumov.entity.Match;
 import com.runaumov.service.MatchesService;
 import com.runaumov.service.NewMatchService;
@@ -25,8 +26,9 @@ public class MatchScoreServlet extends HttpServlet {
         Match newMatch = MatchStorage.getInstance().getMatchById(matchId);
 
         // TODO: неправильно, тут передается модель, а надо DTO
-        req.setAttribute("match", newMatch);
-        req.setAttribute("uuid", matchIdParam);
+        ResponseMatchScoreDto responseMatchScoreDto = new ResponseMatchScoreDto(newMatch, matchId);
+        req.setAttribute("match", responseMatchScoreDto.getMatch());
+        req.setAttribute("uuid", responseMatchScoreDto.getMatchId());
         req.getRequestDispatcher("match-score.jsp").forward(req, resp);
     }
 
