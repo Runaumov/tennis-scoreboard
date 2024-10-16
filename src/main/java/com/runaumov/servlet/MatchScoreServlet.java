@@ -3,6 +3,7 @@ package com.runaumov.servlet;
 import com.runaumov.MatchStorage;
 import com.runaumov.dto.ResponseMatchScoreDto;
 import com.runaumov.entity.Match;
+import com.runaumov.service.MatchCalculateService;
 import com.runaumov.service.MatchesService;
 import com.runaumov.service.NewMatchService;
 import jakarta.servlet.ServletException;
@@ -35,6 +36,8 @@ public class MatchScoreServlet extends HttpServlet {
         String playerId = req.getParameter("winnerID");
         String matchIdParam = req.getParameter("uuid");
         UUID matchId = UUID.fromString(matchIdParam);
+
+        MatchCalculateService matchCalculateService = new MatchCalculateService();
 
 
         int a = 1;
