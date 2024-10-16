@@ -1,4 +1,4 @@
-package com.runaumov;
+package com.runaumov.entity;
 
 import lombok.*;
 

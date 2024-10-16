@@ -1,7 +1,7 @@
 package com.runaumov.service;
 
-import com.runaumov.GameScore;
-import com.runaumov.MatchScore;
+import com.runaumov.entity.GameScore;
+import com.runaumov.entity.MatchScore;
 import com.runaumov.MatchStorage;
 import com.runaumov.dao.PlayerDao;
 import com.runaumov.dto.RequestNewMatchDto;
