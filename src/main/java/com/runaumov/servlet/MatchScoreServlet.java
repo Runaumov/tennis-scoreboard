@@ -22,13 +22,10 @@ public class MatchScoreServlet extends HttpServlet {
         String matchIdParam = req.getParameter("uuid");
         UUID matchId = UUID.fromString(matchIdParam);
 
-        NewMatchService matchService = new NewMatchService();
         Match newMatch = MatchStorage.getInstance().getMatchById(matchId);
 
-        // TODO: неправильно, тут передается модель, а надо DTO
         ResponseMatchScoreDto responseMatchScoreDto = new ResponseMatchScoreDto(newMatch, matchId);
-        req.setAttribute("match", responseMatchScoreDto.getMatch());
-        req.setAttribute("uuid", responseMatchScoreDto.getMatchId());
+        req.setAttribute("responseMatchScoreDto", responseMatchScoreDto);
         req.getRequestDispatcher("match-score.jsp").forward(req, resp);
     }
 
@@ -36,6 +33,10 @@ public class MatchScoreServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String playerId = req.getParameter("winnerID");
+        String matchIdParam = req.getParameter("uuid");
+        UUID matchId = UUID.fromString(matchIdParam);
+
+
         int a = 1;
     }
 }

@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Cas
-  Date: 14.10.2024
-  Time: 22:32
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -12,7 +5,7 @@
     <title>Match Score</title>
 </head>
 <body>
-<h1>Match Score</h1>
+<h1>Match Score № ${responseMatchScoreDto.matchId}</h1>
 
 <table>
     <tr>
@@ -20,23 +13,31 @@
         <th>Player 2</th>
     </tr>
     <tr>
-        <td>${match.getPlayer1Id()}</td>
-        <td>${match.getPlayer2Id()}</td>
+        <td>${responseMatchScoreDto.match.player1Id.name}</td> <!-- Предполагается, что Player имеет поле name -->
+        <td>${responseMatchScoreDto.match.player2Id.name}</td>
     </tr>
-    <!--<tr>
-        <td>${match.player1Score}</td>
-        <td>${match.player2Score}</td>
-    </tr>-->
+    <tr>
+        <td>Set: ${responseMatchScoreDto.match.matchScore.setPlayer1}</td>
+        <td>Set: ${responseMatchScoreDto.match.matchScore.setPlayer2}</td>
+    </tr>
+    <tr>
+        <td>Points: ${responseMatchScoreDto.match.matchScore.scorePlayer1}</td>
+        <td>Points: ${responseMatchScoreDto.match.matchScore.scorePlayer2}</td>
+    </tr>
+
 </table>
 
-<form action="${pageContext.request.contextPath}/match-score?uuid=${param.uuid}" method="POST">
-    <input type="hidden" name="winnerId" value="${match.getPlayer1Id()}">
+<form action="${pageContext.request.contextPath}/match-score?uuid=${responseMatchScoreDto.matchId}" method="POST">
+    <input type="hidden" name="winnerId" value="${responseMatchScoreDto.match.player1Id.id}">
+    <input type="hidden" name="matchId" value="${responseMatchScoreDto.matchId}">
     <button type="submit">Player 1 Wins Point</button>
 </form>
 
-<form action="${pageContext.request.contextPath}/match-score?uuid=${param.uuid}" method="POST">
-    <input type="hidden" name="winnerId" value="${match.getPlayer2Id()}">
+<form action="${pageContext.request.contextPath}/match-score?uuid=${responseMatchScoreDto.matchId}" method="POST">
+    <input type="hidden" name="winnerId" value="${responseMatchScoreDto.match.player2Id.id}">
+    <input type="hidden" name="matchId" value="${responseMatchScoreDto.matchId}">
     <button type="submit">Player 2 Wins Point</button>
 </form>
+
 </body>
 </html>
