@@ -1,8 +1,10 @@
 package com.runaumov.servlet;
 
 import com.runaumov.MatchStorage;
+import com.runaumov.dto.RequestMatchScoreDto;
 import com.runaumov.dto.ResponseMatchScoreDto;
 import com.runaumov.entity.Match;
+import com.runaumov.service.MatchCalculateService;
 import com.runaumov.service.MatchesService;
 import com.runaumov.service.NewMatchService;
 import jakarta.servlet.ServletException;
@@ -32,11 +34,20 @@ public class MatchScoreServlet extends HttpServlet {
     // TODO: написать
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String playerId = req.getParameter("winnerID");
+        // TODO: переименовать playerIdReqP
+        String playerNameReqP = req.getParameter("winnerId");
+        int playerId = Integer.parseInt(playerNameReqP);
         String matchIdParam = req.getParameter("uuid");
         UUID matchId = UUID.fromString(matchIdParam);
 
+        Match currentMatch = MatchStorage.getInstance().getMatchById(matchId);
+        RequestMatchScoreDto requestMatchScoreDto = new RequestMatchScoreDto(currentMatch, playerId);
 
-        int a = 1;
+        MatchCalculateService matchCalculateService = new MatchCalculateService();
+        Match updatedMatch = matchCalculateService.updateMatchScore(requestMatchScoreDto);
+
+        ResponseMatchScoreDto responseMatchScoreDto = new ResponseMatchScoreDto(updatedMatch, matchId);
+        req.setAttribute("responseMatchScoreDto", responseMatchScoreDto);
+        req.getRequestDispatcher("match-score.jsp").forward(req, resp);
     }
 }

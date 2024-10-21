@@ -1,11 +1,12 @@
 package com.runaumov.service;
 
-import com.runaumov.entity.GameScore;
-import com.runaumov.entity.MatchScore;
+
+import com.runaumov.PointScore;
 import com.runaumov.MatchStorage;
 import com.runaumov.dao.PlayerDao;
 import com.runaumov.dto.RequestNewMatchDto;
 import com.runaumov.entity.Match;
+import com.runaumov.entity.MatchScore;
 import com.runaumov.entity.Player;
 import java.util.*;
 
@@ -19,8 +20,8 @@ public class NewMatchService {
 
         // TODO: рассмотреть варик создания отдельного метода
         MatchScore matchScore = MatchScore.builder()
-                .scorePlayer1(GameScore.LOVE)
-                .scorePlayer2(GameScore.LOVE)
+                .pointScorePlayer1(PointScore.LOVE)
+                .pointScorePlayer2(PointScore.LOVE)
                 .build();
 
         Match match = Match.builder()

@@ -13,16 +13,16 @@
         <th>Player 2</th>
     </tr>
     <tr>
-        <td>${responseMatchScoreDto.match.player1Id.name}</td> <!-- Предполагается, что Player имеет поле name -->
+        <td>${responseMatchScoreDto.match.player1Id.name}</td>
         <td>${responseMatchScoreDto.match.player2Id.name}</td>
     </tr>
     <tr>
-        <td>Set: ${responseMatchScoreDto.match.matchScore.setPlayer1}</td>
-        <td>Set: ${responseMatchScoreDto.match.matchScore.setPlayer2}</td>
+        <td>Set: ${responseMatchScoreDto.match.matchScore.setScorePlayer1}</td>
+        <td>Set: ${responseMatchScoreDto.match.matchScore.setScorePlayer2}</td>
     </tr>
     <tr>
-        <td>Points: ${responseMatchScoreDto.match.matchScore.scorePlayer1}</td>
-        <td>Points: ${responseMatchScoreDto.match.matchScore.scorePlayer2}</td>
+        <td>Points: ${responseMatchScoreDto.match.matchScore.pointScorePlayer1}</td>
+        <td>Points: ${responseMatchScoreDto.match.matchScore.pointScorePlayer2}</td>
     </tr>
 
 </table>
