@@ -47,5 +47,7 @@ public class MatchScoreServlet extends HttpServlet {
         Match updatedMatch = matchCalculateService.updateMatchScore(requestMatchScoreDto);
 
         ResponseMatchScoreDto responseMatchScoreDto = new ResponseMatchScoreDto(updatedMatch, matchId);
+        req.setAttribute("responseMatchScoreDto", responseMatchScoreDto);
+        req.getRequestDispatcher("match-score.jsp").forward(req, resp);
     }
 }
