@@ -13,7 +13,7 @@
         <th>Player 2</th>
     </tr>
     <tr>
-        <td>${responseMatchScoreDto.match.player1Id.name}</td> <!-- Предполагается, что Player имеет поле name -->
+        <td>${responseMatchScoreDto.match.player1Id.name}</td>
         <td>${responseMatchScoreDto.match.player2Id.name}</td>
     </tr>
     <tr>

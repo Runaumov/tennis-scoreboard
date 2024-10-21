@@ -8,8 +8,8 @@ import lombok.*;
 @Getter
 @Setter
 public class MatchScore {
-    private GameScore scorePlayer1;
-    private GameScore scorePlayer2;
-    private int setPlayer1;
-    private int setPlayer2;
+    private GameScore gameScorePlayer1;
+    private GameScore gameScorePlayer2;
+    private int setScorePlayer1;
+    private int setScorePlayer2;
 }

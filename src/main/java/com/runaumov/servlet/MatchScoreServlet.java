@@ -1,6 +1,7 @@
 package com.runaumov.servlet;
 
 import com.runaumov.MatchStorage;
+import com.runaumov.dto.RequestMatchScoreDto;
 import com.runaumov.dto.ResponseMatchScoreDto;
 import com.runaumov.entity.Match;
 import com.runaumov.service.MatchCalculateService;
@@ -33,13 +34,18 @@ public class MatchScoreServlet extends HttpServlet {
     // TODO: написать
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String playerId = req.getParameter("winnerID");
+        // TODO: переименовать playerIdReqP
+        String playerNameReqP = req.getParameter("winnerId");
+        int playerId = Integer.parseInt(playerNameReqP);
         String matchIdParam = req.getParameter("uuid");
         UUID matchId = UUID.fromString(matchIdParam);
 
+        Match currentMatch = MatchStorage.getInstance().getMatchById(matchId);
+        RequestMatchScoreDto requestMatchScoreDto = new RequestMatchScoreDto(currentMatch, playerId);
+
         MatchCalculateService matchCalculateService = new MatchCalculateService();
+        Match updatedMatch = matchCalculateService.updateMatchScore(requestMatchScoreDto);
 
-
-        int a = 1;
+        ResponseMatchScoreDto responseMatchScoreDto = new ResponseMatchScoreDto(updatedMatch, matchId);
     }
 }
