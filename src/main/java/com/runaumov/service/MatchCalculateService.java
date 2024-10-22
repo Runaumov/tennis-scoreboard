@@ -1,17 +1,18 @@
 package com.runaumov.service;
 
 import com.runaumov.PointScore;
-import com.runaumov.MatchScore;
+import com.runaumov.entity.MatchScore;
 import com.runaumov.dto.RequestMatchScoreDto;
 import com.runaumov.entity.Match;
 import com.runaumov.entity.Player;
 
 public class MatchCalculateService {
 
+    private static final int GAME_ADVANTAGE_DIFFERENCE = 2;
+    private static final int MIN_WIN_GAMES = 6;
+
     public Match updateMatchScore(RequestMatchScoreDto requestMatchScoreDto) {
         Match currentMatch = requestMatchScoreDto.getMatch();
-        Player player1 = currentMatch.getPlayer1Id();
-        Player player2 = currentMatch.getPlayer2Id();
         MatchScore currentMatchScore = currentMatch.getMatchScore();
         int winnerId = requestMatchScoreDto.getPlayerId();
 
@@ -27,12 +28,17 @@ public class MatchCalculateService {
             return updateSetScore(currentMatch, winnerId);
         }
 
-        if (isSetWin()) {
-            // логика для выигранного сета, сет обнуляется, счетчик матча увеличивается на +1
+        if (isSetWin(currentMatch)) {
+            int gameScorePlayer1 = currentMatchScore.getGameScorePlayer1();
+            int gameScorePlayer2 = currentMatchScore.getGameScorePlayer2();
+
+            currentMatchScore.addPreviousSet(gameScorePlayer1, gameScorePlayer2);
+            currentMatchScore.setDefaultGameScore();
+
+            return currentMatch;
         }
 
         return updateGameScore(currentMatch, winnerId);
-
     }
 
     private boolean isDeuce() { // 40:40
@@ -50,7 +56,16 @@ public class MatchCalculateService {
         return (pointScore1.equals(PointScore.FORTY) || pointScore2.equals(PointScore.FORTY));
     }
 
-    private boolean isSetWin() {
+    private boolean isSetWin(Match match) {
+        int gameScorePlayer1 = match.getMatchScore().getGameScorePlayer1();
+        int gameScorePlayer2 = match.getMatchScore().getGameScorePlayer2();
+        int gameDifference = Math.abs(gameScorePlayer1 - gameScorePlayer2);
+
+        if (gameDifference >= GAME_ADVANTAGE_DIFFERENCE &&
+           (gameScorePlayer1 >= MIN_WIN_GAMES || gameScorePlayer2 >= MIN_WIN_GAMES)
+        ) {
+            return true;
+        }
         return false;
     }
 

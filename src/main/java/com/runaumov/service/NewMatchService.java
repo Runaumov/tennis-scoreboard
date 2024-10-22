@@ -22,6 +22,7 @@ public class NewMatchService {
         MatchScore matchScore = MatchScore.builder()
                 .pointScorePlayer1(PointScore.LOVE)
                 .pointScorePlayer2(PointScore.LOVE)
+                .previousSets(new ArrayList<>())
                 .build();
 
         Match match = Match.builder()

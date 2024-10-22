@@ -17,8 +17,8 @@
         <td>${responseMatchScoreDto.match.player2Id.name}</td>
     </tr>
     <tr>
-        <td>Set: ${responseMatchScoreDto.match.matchScore.setScorePlayer1}</td>
-        <td>Set: ${responseMatchScoreDto.match.matchScore.setScorePlayer2}</td>
+        <td>Set: ${responseMatchScoreDto.match.matchScore.gameScorePlayer1}</td>
+        <td>Set: ${responseMatchScoreDto.match.matchScore.gameScorePlayer2}</td>
     </tr>
     <tr>
         <td>Points: ${responseMatchScoreDto.match.matchScore.pointScorePlayer1}</td>
