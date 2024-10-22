@@ -10,6 +10,7 @@ public class MatchCalculateService {
 
     private static final int GAME_ADVANTAGE_DIFFERENCE = 2;
     private static final int MIN_WIN_GAMES = 6;
+    private static final int TIEBREAK_START_SCORE = 6;
 
     public Match updateMatchScore(RequestMatchScoreDto requestMatchScoreDto) {
         Match currentMatch = requestMatchScoreDto.getMatch();
@@ -20,7 +21,7 @@ public class MatchCalculateService {
             // логика для 40:40
         }
 
-        if (isTiebreak()) {
+        if (isTiebreak(currentMatchScore)) {
 
         }
 
@@ -45,8 +46,11 @@ public class MatchCalculateService {
         return false;
     }
 
-    private boolean isTiebreak() { // 6:6
-        return false;
+    private boolean isTiebreak(MatchScore matchScore) { // 6:6
+        int gameScorePlayer1 = matchScore.getGameScorePlayer1();
+        int gameScorePlayer2 = matchScore.getGameScorePlayer2();
+
+        return gameScorePlayer1 == TIEBREAK_START_SCORE && gameScorePlayer2 == TIEBREAK_START_SCORE;
     }
 
     private boolean isGameWin(Match match) {
