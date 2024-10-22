@@ -11,6 +11,7 @@ public class MatchCalculateService {
     private static final int GAME_ADVANTAGE_DIFFERENCE = 2;
     private static final int MIN_WIN_GAMES = 6;
     private static final int TIEBREAK_START_SCORE = 6;
+    private boolean isTiebreak = false;
 
     public Match updateMatchScore(RequestMatchScoreDto requestMatchScoreDto) {
         Match currentMatch = requestMatchScoreDto.getMatch();
@@ -19,10 +20,6 @@ public class MatchCalculateService {
 
         if (isDeuce()) {
             // логика для 40:40
-        }
-
-        if (isTiebreak(currentMatchScore)) {
-
         }
 
         if (isGameWin(currentMatch)) {
@@ -39,6 +36,7 @@ public class MatchCalculateService {
             return currentMatch;
         }
 
+        checkForTiebreak(currentMatchScore);
         return updateGameScore(currentMatch, winnerId);
     }
 
@@ -46,11 +44,13 @@ public class MatchCalculateService {
         return false;
     }
 
-    private boolean isTiebreak(MatchScore matchScore) { // 6:6
+    private void checkForTiebreak(MatchScore matchScore) { // 6:6
         int gameScorePlayer1 = matchScore.getGameScorePlayer1();
         int gameScorePlayer2 = matchScore.getGameScorePlayer2();
 
-        return gameScorePlayer1 == TIEBREAK_START_SCORE && gameScorePlayer2 == TIEBREAK_START_SCORE;
+        if (gameScorePlayer1 == TIEBREAK_START_SCORE && gameScorePlayer2 == TIEBREAK_START_SCORE) {
+            isTiebreak = true;
+        }
     }
 
     private boolean isGameWin(Match match) {
@@ -77,19 +77,27 @@ public class MatchCalculateService {
     private Match updateGameScore(Match match, int winnerId) {
         Player player1 = match.getPlayer1Id();
         Player player2 = match.getPlayer2Id();
-        if (player1.getId() == winnerId) {
-            PointScore pointScorePlayer1 = match.getMatchScore().getPointScorePlayer1();
-            PointScore updatedPointScore = PointScore.getNextGameScore(pointScorePlayer1);
-            match.getMatchScore().setPointScorePlayer1(updatedPointScore);
-            return match;
-        } else if (player2.getId() == winnerId) {
-            PointScore pointScorePlayer2 = match.getMatchScore().getPointScorePlayer2();
-            PointScore updatedPointScore = PointScore.getNextGameScore(pointScorePlayer2);
-            match.getMatchScore().setPointScorePlayer2(updatedPointScore);
-            return match;
+        PointScore pointScorePlayer1 = match.getMatchScore().getPointScorePlayer1();
+        PointScore pointScorePlayer2 = match.getMatchScore().getPointScorePlayer2();
+
+        if (isTiebreak) {
+            return null;
+
+
         } else {
-            // TODO : доделать
-            throw new IllegalArgumentException("Ошибка");
+
+            if (player1.getId() == winnerId) {
+                PointScore updatedPointScore = PointScore.getNextGameScore(pointScorePlayer1);
+                match.getMatchScore().setPointScorePlayer1(updatedPointScore);
+                return match;
+            } else if (player2.getId() == winnerId) {
+                PointScore updatedPointScore = PointScore.getNextGameScore(pointScorePlayer2);
+                match.getMatchScore().setPointScorePlayer2(updatedPointScore);
+                return match;
+            } else {
+                // TODO : доделать
+                throw new IllegalArgumentException("Ошибка");
+            }
         }
     }
 
