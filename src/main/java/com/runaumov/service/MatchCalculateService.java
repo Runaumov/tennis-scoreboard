@@ -54,10 +54,10 @@ public class MatchCalculateService {
     }
 
     private boolean isGameWin(Match match) {
-        PointScore pointScore1 = match.getMatchScore().getPointScorePlayer1();
-        PointScore pointScore2 = match.getMatchScore().getPointScorePlayer2();
+        String pointScore1 = match.getMatchScore().getPointScorePlayer1();
+        String pointScore2 = match.getMatchScore().getPointScorePlayer2();
 
-        return (pointScore1.equals(PointScore.FORTY) || pointScore2.equals(PointScore.FORTY));
+        return (pointScore1.toUpperCase().equals(PointScore.FORTY.name()) || pointScore2.toUpperCase().equals(PointScore.FORTY.name()));
     }
 
     private boolean isSetWin(Match match) {
@@ -77,8 +77,8 @@ public class MatchCalculateService {
     private Match updateGameScore(Match match, int winnerId) {
         Player player1 = match.getPlayer1Id();
         Player player2 = match.getPlayer2Id();
-        PointScore pointScorePlayer1 = match.getMatchScore().getPointScorePlayer1();
-        PointScore pointScorePlayer2 = match.getMatchScore().getPointScorePlayer2();
+        String pointScorePlayer1 = match.getMatchScore().getPointScorePlayer1();
+        String pointScorePlayer2 = match.getMatchScore().getPointScorePlayer2();
 
         if (isTiebreak) {
             return null;
@@ -87,11 +87,12 @@ public class MatchCalculateService {
         } else {
 
             if (player1.getId() == winnerId) {
-                PointScore updatedPointScore = PointScore.getNextGameScore(pointScorePlayer1);
+
+                String updatedPointScore = PointScore.getNextGameScore(PointScore.getPointScoreFromString(pointScorePlayer1));
                 match.getMatchScore().setPointScorePlayer1(updatedPointScore);
                 return match;
             } else if (player2.getId() == winnerId) {
-                PointScore updatedPointScore = PointScore.getNextGameScore(pointScorePlayer2);
+                String updatedPointScore = PointScore.getNextGameScore(PointScore.getPointScoreFromString(pointScorePlayer2));
                 match.getMatchScore().setPointScorePlayer2(updatedPointScore);
                 return match;
             } else {
@@ -108,13 +109,13 @@ public class MatchCalculateService {
         Player player2 = match.getPlayer2Id();
         if (player1.getId() == winnerId) {
             match.getMatchScore().setGameScorePlayer1(match.getMatchScore().getGameScorePlayer1() + 1);
-            match.getMatchScore().setPointScorePlayer1(PointScore.LOVE);
-            match.getMatchScore().setPointScorePlayer2(PointScore.LOVE);
+            match.getMatchScore().setPointScorePlayer1(String.valueOf(PointScore.LOVE));
+            match.getMatchScore().setPointScorePlayer2(String.valueOf(PointScore.LOVE));
             return match;
         } else if (player2.getId() == winnerId) {
             match.getMatchScore().setGameScorePlayer2(match.getMatchScore().getGameScorePlayer2() + 1);
-            match.getMatchScore().setPointScorePlayer1(PointScore.LOVE);
-            match.getMatchScore().setPointScorePlayer2(PointScore.LOVE);
+            match.getMatchScore().setPointScorePlayer1(String.valueOf(PointScore.LOVE));
+            match.getMatchScore().setPointScorePlayer2(String.valueOf(PointScore.LOVE));
             return match;
         } else {
             // TODO : доделать

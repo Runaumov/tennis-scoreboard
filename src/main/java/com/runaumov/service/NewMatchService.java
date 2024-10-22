@@ -20,8 +20,8 @@ public class NewMatchService {
 
         // TODO: рассмотреть варик создания отдельного метода
         MatchScore matchScore = MatchScore.builder()
-                .pointScorePlayer1(PointScore.LOVE)
-                .pointScorePlayer2(PointScore.LOVE)
+                .pointScorePlayer1(PointScore.LOVE.name())
+                .pointScorePlayer2(PointScore.LOVE.name())
                 .previousSets(new ArrayList<>())
                 .build();
 

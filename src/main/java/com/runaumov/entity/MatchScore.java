@@ -11,8 +11,8 @@ import java.util.List;
 @Getter
 @Setter
 public class MatchScore {
-    private PointScore pointScorePlayer1;
-    private PointScore pointScorePlayer2;
+    private String pointScorePlayer1;
+    private String pointScorePlayer2;
     private int gameScorePlayer1;
     private int gameScorePlayer2;
     private List<int[]> previousSets;
