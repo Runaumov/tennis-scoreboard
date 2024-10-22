@@ -22,11 +22,13 @@ public class MatchScore {
     }
 
     public void setDefaultTieBreakScore() {
-
+        this.pointScorePlayer1 = "0";
+        this.pointScorePlayer2 = "0";
     }
 
     public void setDefaultGameScore() {
         this.gameScorePlayer1 = 0;
         this.gameScorePlayer2 = 0;
     }
+
 }

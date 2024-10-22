@@ -48,8 +48,9 @@ public class MatchCalculateService {
         int gameScorePlayer1 = matchScore.getGameScorePlayer1();
         int gameScorePlayer2 = matchScore.getGameScorePlayer2();
 
-        if (gameScorePlayer1 == TIEBREAK_START_SCORE && gameScorePlayer2 == TIEBREAK_START_SCORE) {
+        if (!isTiebreak && gameScorePlayer1 == TIEBREAK_START_SCORE && gameScorePlayer2 == TIEBREAK_START_SCORE) {
             isTiebreak = true;
+            matchScore.setDefaultTieBreakScore();
         }
     }
 
@@ -80,14 +81,21 @@ public class MatchCalculateService {
         String pointScorePlayer1 = match.getMatchScore().getPointScorePlayer1();
         String pointScorePlayer2 = match.getMatchScore().getPointScorePlayer2();
 
+        // TODO : отрефакторить
         if (isTiebreak) {
-            return null;
-
+            if (player1.getId() == winnerId) {
+                int pointScorePlayer1Int = Integer.parseInt(pointScorePlayer1) + 1;
+                pointScorePlayer1 = String.valueOf(pointScorePlayer1Int);
+                match.getMatchScore().setPointScorePlayer1(pointScorePlayer1);
+            } else if (player2.getId() == winnerId) {
+                int pointScorePlayer2Int = Integer.parseInt(pointScorePlayer2) + 1;
+                pointScorePlayer2 = String.valueOf(pointScorePlayer2Int);
+                match.getMatchScore().setPointScorePlayer2(pointScorePlayer2);
+            }
+            return match;
 
         } else {
-
             if (player1.getId() == winnerId) {
-
                 String updatedPointScore = PointScore.getNextGameScore(PointScore.getPointScoreFromString(pointScorePlayer1));
                 match.getMatchScore().setPointScorePlayer1(updatedPointScore);
                 return match;
