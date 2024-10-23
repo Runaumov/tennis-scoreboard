@@ -1,6 +1,7 @@
 package com.runaumov.service;
 
 
+import com.runaumov.MatchType;
 import com.runaumov.PointScore;
 import com.runaumov.MatchStorage;
 import com.runaumov.dao.PlayerDao;
@@ -22,6 +23,7 @@ public class NewMatchService {
         MatchScore matchScore = MatchScore.builder()
                 .pointScorePlayer1(PointScore.LOVE.name())
                 .pointScorePlayer2(PointScore.LOVE.name())
+                .matchType(MatchType.NORMAL)
                 .previousSets(new ArrayList<>())
                 .build();
 

@@ -1,5 +1,6 @@
 package com.runaumov.service;
 
+import com.runaumov.MatchType;
 import com.runaumov.PointScore;
 import com.runaumov.entity.MatchScore;
 import com.runaumov.dto.RequestMatchScoreDto;
@@ -11,7 +12,6 @@ public class MatchCalculateService {
     private static final int GAME_ADVANTAGE_DIFFERENCE = 2;
     private static final int MIN_WIN_GAMES = 6;
     private static final int TIEBREAK_START_SCORE = 6;
-    private boolean isTiebreak = false;
 
     public Match updateMatchScore(RequestMatchScoreDto requestMatchScoreDto) {
         Match currentMatch = requestMatchScoreDto.getMatch();
@@ -48,9 +48,11 @@ public class MatchCalculateService {
         int gameScorePlayer1 = matchScore.getGameScorePlayer1();
         int gameScorePlayer2 = matchScore.getGameScorePlayer2();
 
-        if (!isTiebreak && gameScorePlayer1 == TIEBREAK_START_SCORE && gameScorePlayer2 == TIEBREAK_START_SCORE) {
-            isTiebreak = true;
+        if (gameScorePlayer1 == TIEBREAK_START_SCORE && gameScorePlayer2 == TIEBREAK_START_SCORE) {
             matchScore.setDefaultTieBreakScore();
+            if (matchScore.getMatchType().equals(MatchType.NORMAL)) {
+                matchScore.setMatchType(MatchType.TIEBREAK);
+            }
         }
     }
 
@@ -82,7 +84,7 @@ public class MatchCalculateService {
         String pointScorePlayer2 = match.getMatchScore().getPointScorePlayer2();
 
         // TODO : отрефакторить
-        if (isTiebreak) {
+        if (match.getMatchScore().getMatchType().equals(MatchType.TIEBREAK)) {
             if (player1.getId() == winnerId) {
                 int pointScorePlayer1Int = Integer.parseInt(pointScorePlayer1) + 1;
                 pointScorePlayer1 = String.valueOf(pointScorePlayer1Int);

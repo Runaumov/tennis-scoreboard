@@ -1,8 +1,7 @@
 package com.runaumov.entity;
 
-import com.runaumov.PointScore;
+import com.runaumov.MatchType;
 import lombok.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -16,6 +15,7 @@ public class MatchScore {
     private int gameScorePlayer1;
     private int gameScorePlayer2;
     private List<int[]> previousSets;
+    private MatchType matchType;
 
     public void addPreviousSet(int gameScorePlayer1, int gameScorePlayer2) {
         previousSets.add(new int[]{gameScorePlayer1, gameScorePlayer2});
