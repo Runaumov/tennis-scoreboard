@@ -11,7 +11,10 @@ public class MatchCalculateService {
 
     private static final int GAME_ADVANTAGE_DIFFERENCE = 2;
     private static final int MIN_WIN_GAMES = 6;
+    private static final int MIN_WIN_GAMES_FOR_TIEBREAK = 6;
     private static final int TIEBREAK_START_SCORE = 6;
+    private static final int SET_POINT_TO_WINNER = 7;
+    private static final int SET_POINT_TO_LOOSER = 6;
 
     public Match updateMatchScore(RequestMatchScoreDto requestMatchScoreDto) {
         Match currentMatch = requestMatchScoreDto.getMatch();
@@ -36,10 +39,26 @@ public class MatchCalculateService {
             return currentMatch;
         }
 
+        if (isTiebreakWon(currentMatchScore)) {
+            Player player1 = currentMatch.getPlayer1Id();
+            Player player2 = currentMatch.getPlayer2Id();
+
+            if (player1.getId() == winnerId) {
+                currentMatchScore.addPreviousSet(SET_POINT_TO_WINNER, SET_POINT_TO_LOOSER);
+            } else if (player2.getId() == winnerId){
+                currentMatchScore.addPreviousSet(SET_POINT_TO_LOOSER, SET_POINT_TO_WINNER);
+            }
+            currentMatchScore.setDefaultPointScore();
+            currentMatchScore.setDefaultGameScore();
+            currentMatchScore.setMatchType(MatchType.NORMAL);
+            int a = 1;
+        }
+
         checkForTiebreak(currentMatchScore);
         return updateGameScore(currentMatch, winnerId);
     }
 
+    // TODO : реализовать
     private boolean isDeuce() { // 40:40
         return false;
     }
@@ -49,11 +68,23 @@ public class MatchCalculateService {
         int gameScorePlayer2 = matchScore.getGameScorePlayer2();
 
         if (gameScorePlayer1 == TIEBREAK_START_SCORE && gameScorePlayer2 == TIEBREAK_START_SCORE) {
-            matchScore.setDefaultTieBreakScore();
             if (matchScore.getMatchType().equals(MatchType.NORMAL)) {
+                matchScore.setDefaultPointScore();
                 matchScore.setMatchType(MatchType.TIEBREAK);
             }
         }
+    }
+
+    private boolean isTiebreakWon(MatchScore matchScore) {
+        if (matchScore.getMatchType().equals(MatchType.TIEBREAK)) {
+            int pointScorePlayer1 = Integer.parseInt(matchScore.getPointScorePlayer1());
+            int pointScorePlayer2 = Integer.parseInt(matchScore.getPointScorePlayer2());
+            int gameDifference = Math.abs(pointScorePlayer1 - pointScorePlayer2);
+
+            return gameDifference >= GAME_ADVANTAGE_DIFFERENCE &&
+                    (pointScorePlayer1 >= MIN_WIN_GAMES_FOR_TIEBREAK || pointScorePlayer2 >= MIN_WIN_GAMES_FOR_TIEBREAK);
+        }
+        return false;
     }
 
     private boolean isGameWin(Match match) {
@@ -63,6 +94,7 @@ public class MatchCalculateService {
         return (pointScore1.toUpperCase().equals(PointScore.FORTY.name()) || pointScore2.toUpperCase().equals(PointScore.FORTY.name()));
     }
 
+    // TODO : Возможно тут баг в условии. Надо чекнуть условия завершения сета
     private boolean isSetWin(Match match) {
         int gameScorePlayer1 = match.getMatchScore().getGameScorePlayer1();
         int gameScorePlayer2 = match.getMatchScore().getGameScorePlayer2();

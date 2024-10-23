@@ -21,7 +21,7 @@ public class MatchScore {
         previousSets.add(new int[]{gameScorePlayer1, gameScorePlayer2});
     }
 
-    public void setDefaultTieBreakScore() {
+    public void setDefaultPointScore() {
         this.pointScorePlayer1 = "0";
         this.pointScorePlayer2 = "0";
     }
