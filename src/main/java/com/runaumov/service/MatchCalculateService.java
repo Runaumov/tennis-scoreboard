@@ -21,6 +21,7 @@ public class MatchCalculateService {
         MatchScore currentMatchScore = currentMatch.getMatchScore();
         int winnerId = requestMatchScoreDto.getPlayerId();
 
+        // TODO : реализовать
         if (isDeuce()) {
             // логика для 40:40
         }
