@@ -4,9 +4,7 @@ import com.runaumov.MatchStorage;
 import com.runaumov.dto.RequestMatchScoreDto;
 import com.runaumov.dto.ResponseMatchScoreDto;
 import com.runaumov.entity.Match;
-import com.runaumov.service.MatchCalculateService;
-import com.runaumov.service.MatchesService;
-import com.runaumov.service.NewMatchService;
+import com.runaumov.service.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -43,7 +41,8 @@ public class MatchScoreServlet extends HttpServlet {
         Match currentMatch = MatchStorage.getInstance().getMatchById(matchId);
         RequestMatchScoreDto requestMatchScoreDto = new RequestMatchScoreDto(currentMatch, playerId);
 
-        MatchCalculateService matchCalculateService = new MatchCalculateService();
+        MatchCalculateService matchCalculateService = new MatchCalculateService(
+                new ScoreService(), new TieBreakService(), new MatchStatusChecker());
         Match updatedMatch = matchCalculateService.updateMatchScore(requestMatchScoreDto);
 
         ResponseMatchScoreDto responseMatchScoreDto = new ResponseMatchScoreDto(updatedMatch, matchId);
