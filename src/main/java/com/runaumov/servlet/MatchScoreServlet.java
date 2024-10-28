@@ -47,6 +47,7 @@ public class MatchScoreServlet extends HttpServlet {
 
         ResponseMatchScoreDto responseMatchScoreDto = new ResponseMatchScoreDto(updatedMatch, matchId);
         req.setAttribute("responseMatchScoreDto", responseMatchScoreDto);
+        System.out.println("Previous Sets Size: " + responseMatchScoreDto.getMatch().getMatchScore().getPreviousSets().size());
         req.getRequestDispatcher("match-score.jsp").forward(req, resp);
     }
 }

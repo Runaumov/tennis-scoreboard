@@ -26,6 +26,27 @@
     </tr>
 </table>
 
+<h2>Previous Sets</h2>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Set №</th>
+        <th>Player 1 Score</th>
+        <th>Player 2 Score</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="set" items="${responseMatchScoreDto.match.matchScore.previousSets}" varStatus="status">
+        <p>Set: ${set[0]}, Score: ${set[1]}</p> <!-- Добавьте вывод для проверки -->
+        <tr>
+            <td>Set ${status.index + 1}</td> <!-- Номер текущего сета -->
+            <td>${set[0]}</td> <!-- Очки игрока 1 в предыдущем сете -->
+            <td>${set[1]}</td> <!-- Очки игрока 2 в предыдущем сете -->
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
+
 <form action="${pageContext.request.contextPath}/match-score?uuid=${responseMatchScoreDto.matchId}" method="POST">
     <input type="hidden" name="winnerId" value="${responseMatchScoreDto.match.player1Id.id}">
     <input type="hidden" name="matchId" value="${responseMatchScoreDto.matchId}">

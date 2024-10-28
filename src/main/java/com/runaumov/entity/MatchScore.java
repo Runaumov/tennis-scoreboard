@@ -17,6 +17,7 @@ public class MatchScore {
     private List<int[]> previousSets;
     private MatchType matchType;
 
+    // TODO : размер массива не указан
     public void addPreviousSet(int gameScorePlayer1, int gameScorePlayer2) {
         previousSets.add(new int[]{gameScorePlayer1, gameScorePlayer2});
     }
