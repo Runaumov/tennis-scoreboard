@@ -55,7 +55,7 @@ public class MatchesServlet extends HttpServlet {
         req.setAttribute("currentPage", pageNum);
         req.setAttribute("totalPages", totalPages);
 
-        req.getRequestDispatcher("/table.jsp").forward(req, resp);
+        req.getRequestDispatcher("/matches.jsp").forward(req, resp);
 
     }
 }
