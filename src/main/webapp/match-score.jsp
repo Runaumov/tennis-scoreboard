@@ -24,7 +24,6 @@
         <td>Points: ${responseMatchScoreDto.match.matchScore.pointScorePlayer1}</td>
         <td>Points: ${responseMatchScoreDto.match.matchScore.pointScorePlayer2}</td>
     </tr>
-
 </table>
 
 <form action="${pageContext.request.contextPath}/match-score?uuid=${responseMatchScoreDto.matchId}" method="POST">

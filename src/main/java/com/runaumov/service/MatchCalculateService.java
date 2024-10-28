@@ -60,7 +60,4 @@ public class MatchCalculateService {
         return scoreService.updateGameScore(currentMatch, winnerId);
     }
 
-
-
-
 }

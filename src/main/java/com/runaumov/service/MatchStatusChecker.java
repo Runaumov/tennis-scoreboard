@@ -2,6 +2,9 @@ package com.runaumov.service;
 
 import com.runaumov.PointScore;
 import com.runaumov.entity.Match;
+import com.runaumov.entity.MatchScore;
+
+import java.util.List;
 
 public class MatchStatusChecker {
 
@@ -33,5 +36,12 @@ public class MatchStatusChecker {
             return true;
         }
         return false;
+    }
+
+    public boolean isMatchCompleted(Match match) {
+        MatchScore matchScore = match.getMatchScore();
+        List<int[]> previousSets = matchScore.getPreviousSets();
+        int size = previousSets.size();
+        return size == 4 && isSetWin(match);
     }
 }
