@@ -47,7 +47,7 @@
                 <tbody>
                 <tr class="player1">
                     <td class="table-text">${responseMatchScoreDto.match.player1Id.name}</td>
-                    <td class="table-text">2</td>
+                    <td class="table-text">${responseMatchScoreDto.match.matchScore.setScorePlayer1}</td>
                     <td class="table-text">${responseMatchScoreDto.match.matchScore.gameScorePlayer1}</td>
                     <td class="table-text">${responseMatchScoreDto.match.matchScore.pointScorePlayer1}</td>
                     <td class="table-text">
@@ -60,7 +60,7 @@
                 </tr>
                 <tr class="player2">
                     <td class="table-text">${responseMatchScoreDto.match.player2Id.name}</td>
-                    <td class="table-text">2</td>
+                    <td class="table-text">${responseMatchScoreDto.match.matchScore.setScorePlayer2}</td>
                     <td class="table-text">${responseMatchScoreDto.match.matchScore.gameScorePlayer2}</td>
                     <td class="table-text">${responseMatchScoreDto.match.matchScore.pointScorePlayer2}</td>
                     <td class="table-text">

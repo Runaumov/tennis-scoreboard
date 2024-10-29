@@ -24,7 +24,6 @@ public class NewMatchService {
                 .pointScorePlayer1(PointScore.LOVE.name())
                 .pointScorePlayer2(PointScore.LOVE.name())
                 .matchType(MatchType.NORMAL)
-                .previousSets(new ArrayList<>())
                 .build();
 
         Match match = Match.builder()

@@ -8,7 +8,7 @@ import com.runaumov.entity.Player;
 public class ScoreService {
 
     // TODO : исключить дублирование
-    public Match updateGameScore(Match match, int winnerId) {
+    public Match updatePointScore(Match match, int winnerId) {
         Player player1 = match.getPlayer1Id();
         Player player2 = match.getPlayer2Id();
         String pointScorePlayer1 = match.getMatchScore().getPointScorePlayer1();
@@ -43,9 +43,8 @@ public class ScoreService {
         }
     }
 
-
     // TODO : исключить дублирование
-    public Match updateSetScore(Match match, int winnerId) {
+    public Match updateGameScore(Match match, int winnerId) {
         Player player1 = match.getPlayer1Id();
         Player player2 = match.getPlayer2Id();
         if (player1.getId() == winnerId) {
@@ -55,6 +54,26 @@ public class ScoreService {
             return match;
         } else if (player2.getId() == winnerId) {
             match.getMatchScore().setGameScorePlayer2(match.getMatchScore().getGameScorePlayer2() + 1);
+            match.getMatchScore().setPointScorePlayer1(String.valueOf(PointScore.LOVE));
+            match.getMatchScore().setPointScorePlayer2(String.valueOf(PointScore.LOVE));
+            return match;
+        } else {
+            // TODO : доделать
+            throw new IllegalArgumentException("Ошибка");
+        }
+    }
+
+    // TODO : исключить дублирование
+    public Match updateSetScore(Match match, int winnerId) {
+        Player player1 = match.getPlayer1Id();
+        Player player2 = match.getPlayer2Id();
+        if (player1.getId() == winnerId) {
+            match.getMatchScore().setSetScorePlayer1(match.getMatchScore().getSetScorePlayer1() + 1);
+            match.getMatchScore().setPointScorePlayer1(String.valueOf(PointScore.LOVE));
+            match.getMatchScore().setPointScorePlayer2(String.valueOf(PointScore.LOVE));
+            return match;
+        } else if (player2.getId() == winnerId) {
+            match.getMatchScore().setSetScorePlayer1(match.getMatchScore().getSetScorePlayer2() + 1);
             match.getMatchScore().setPointScorePlayer1(String.valueOf(PointScore.LOVE));
             match.getMatchScore().setPointScorePlayer2(String.valueOf(PointScore.LOVE));
             return match;

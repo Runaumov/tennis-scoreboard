@@ -14,13 +14,9 @@ public class MatchScore {
     private String pointScorePlayer2;
     private int gameScorePlayer1;
     private int gameScorePlayer2;
-    private List<int[]> previousSets;
+    private int setScorePlayer1;
+    private int setScorePlayer2;
     private MatchType matchType;
-
-    // TODO : размер массива не указан
-    public void addPreviousSet(int gameScorePlayer1, int gameScorePlayer2) {
-        previousSets.add(new int[]{gameScorePlayer1, gameScorePlayer2});
-    }
 
     public void setDefaultPointScore() {
         this.pointScorePlayer1 = "0";

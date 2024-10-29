@@ -39,9 +39,7 @@ public class MatchStatusChecker {
     }
 
     public boolean isMatchCompleted(Match match) {
-        MatchScore matchScore = match.getMatchScore();
-        List<int[]> previousSets = matchScore.getPreviousSets();
-        int size = previousSets.size();
-        return size == 4 && isSetWin(match);
+        return false;
+
     }
 }

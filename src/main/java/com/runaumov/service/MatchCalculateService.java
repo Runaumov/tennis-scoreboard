@@ -6,7 +6,6 @@ import com.runaumov.dto.RequestMatchScoreDto;
 import com.runaumov.entity.Match;
 import com.runaumov.entity.Player;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 public class MatchCalculateService {
@@ -29,35 +28,31 @@ public class MatchCalculateService {
         }
 
         if (checker.isGameWin(currentMatch)) {
-            return scoreService.updateSetScore(currentMatch, winnerId);
+            return scoreService.updateGameScore(currentMatch, winnerId);
         }
 
         if (checker.isSetWin(currentMatch)) {
-            int gameScorePlayer1 = currentMatchScore.getGameScorePlayer1();
-            int gameScorePlayer2 = currentMatchScore.getGameScorePlayer2();
-
-            currentMatchScore.addPreviousSet(gameScorePlayer1, gameScorePlayer2);
             currentMatchScore.setDefaultGameScore();
-
-            return currentMatch;
+            return scoreService.updateSetScore(currentMatch, winnerId);
         }
 
         if (tieBreakService.isTiebreakWon(currentMatchScore)) {
             Player player1 = currentMatch.getPlayer1Id();
             Player player2 = currentMatch.getPlayer2Id();
 
-            if (player1.getId() == winnerId) {
-                currentMatchScore.addPreviousSet(SET_POINT_TO_WINNER, SET_POINT_TO_LOOSER);
-            } else if (player2.getId() == winnerId){
-                currentMatchScore.addPreviousSet(SET_POINT_TO_LOOSER, SET_POINT_TO_WINNER);
-            }
+            // TODO : реализовать
+//            if (player1.getId() == winnerId) {
+//                currentMatchScore.addPreviousSet(SET_POINT_TO_WINNER, SET_POINT_TO_LOOSER);
+//            } else if (player2.getId() == winnerId){
+//                currentMatchScore.addPreviousSet(SET_POINT_TO_LOOSER, SET_POINT_TO_WINNER);
+//            }
             currentMatchScore.setDefaultPointScore();
             currentMatchScore.setDefaultGameScore();
             currentMatchScore.setMatchType(MatchType.NORMAL);
         }
 
         tieBreakService.checkForTiebreak(currentMatchScore);
-        return scoreService.updateGameScore(currentMatch, winnerId);
+        return scoreService.updatePointScore(currentMatch, winnerId);
     }
 
 }
