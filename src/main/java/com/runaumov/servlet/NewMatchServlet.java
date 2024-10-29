@@ -18,8 +18,8 @@ public class NewMatchServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String palyer1Name = req.getParameter("player1Name");
-        String palyer2Name = req.getParameter("player2Name");
+        String palyer1Name = req.getParameter("playerOne");
+        String palyer2Name = req.getParameter("playerTwo");
 
         //TODO: реализовать валидацию входных данных
 
