@@ -2,15 +2,12 @@ package com.runaumov.service;
 
 import com.runaumov.PointScore;
 import com.runaumov.entity.Match;
-import com.runaumov.entity.MatchScore;
-
-import java.util.List;
 
 public class MatchStatusChecker {
 
-
     private static final int GAME_ADVANTAGE_DIFFERENCE = 2;
     private static final int MIN_WIN_GAMES = 6;
+    private static final int WINNING_SET_COUNT = 2;
 
     // TODO : реализовать
     public boolean isDeuce() { // 40:40
@@ -38,8 +35,9 @@ public class MatchStatusChecker {
         return false;
     }
 
-    public boolean isMatchCompleted(Match match) {
-        return false;
-
+    public boolean isMatchWin(Match match) {
+        int setScoreForPlayer1 = match.getMatchScore().getSetScorePlayer1();
+        int setScoreForPlayer2 = match.getMatchScore().getSetScorePlayer2();
+        return setScoreForPlayer1 == WINNING_SET_COUNT || setScoreForPlayer2 ==WINNING_SET_COUNT;
     }
 }

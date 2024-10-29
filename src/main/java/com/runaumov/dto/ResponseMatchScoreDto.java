@@ -1,6 +1,7 @@
 package com.runaumov.dto;
 
 import com.runaumov.entity.Match;
+import com.runaumov.entity.Player;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,4 +17,10 @@ public class ResponseMatchScoreDto {
 
     private Match match;
     private UUID matchId;
+    private Player winner;
+
+    public ResponseMatchScoreDto(Match match, UUID matchId) {
+        this.match = match;
+        this.matchId = matchId;
+    }
 }

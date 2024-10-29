@@ -4,6 +4,7 @@ import com.runaumov.MatchStorage;
 import com.runaumov.dto.RequestMatchScoreDto;
 import com.runaumov.dto.ResponseMatchScoreDto;
 import com.runaumov.entity.Match;
+import com.runaumov.entity.Player;
 import com.runaumov.service.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -38,14 +39,25 @@ public class MatchScoreServlet extends HttpServlet {
         String matchIdParam = req.getParameter("uuid");
         UUID matchId = UUID.fromString(matchIdParam);
 
+        ScoreService scoreService = new ScoreService();
+        TieBreakService tieBreakService = new TieBreakService();
+        MatchStatusChecker matchStatusChecker = new MatchStatusChecker();
+        MatchResultService matchResultService = new MatchResultService();
+
         Match currentMatch = MatchStorage.getInstance().getMatchById(matchId);
         RequestMatchScoreDto requestMatchScoreDto = new RequestMatchScoreDto(currentMatch, playerId);
 
         MatchCalculateService matchCalculateService = new MatchCalculateService(
-                new ScoreService(), new TieBreakService(), new MatchStatusChecker());
+                scoreService, tieBreakService, matchStatusChecker);
         Match updatedMatch = matchCalculateService.updateMatchScore(requestMatchScoreDto);
 
         ResponseMatchScoreDto responseMatchScoreDto = new ResponseMatchScoreDto(updatedMatch, matchId);
+
+        if (matchStatusChecker.isMatchWin(updatedMatch)) {
+            Player winner = matchResultService.getWinner(updatedMatch);
+            req.setAttribute("winner", winner);
+        }
+
         req.setAttribute("responseMatchScoreDto", responseMatchScoreDto);
         req.getRequestDispatcher("match-score.jsp").forward(req, resp);
     }
