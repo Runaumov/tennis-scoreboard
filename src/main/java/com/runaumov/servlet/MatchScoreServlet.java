@@ -55,7 +55,7 @@ public class MatchScoreServlet extends HttpServlet {
 
         if (matchStatusChecker.isMatchWin(updatedMatch)) {
             Player winner = matchResultService.getWinner(updatedMatch);
-            req.setAttribute("winner", winner);
+            responseMatchScoreDto.setWinner(winner);
         }
 
         req.setAttribute("responseMatchScoreDto", responseMatchScoreDto);

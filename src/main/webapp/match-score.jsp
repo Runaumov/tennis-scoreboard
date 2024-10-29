@@ -1,3 +1,4 @@
+<%@ page import="com.runaumov.dto.ResponseMatchScoreDto" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -32,8 +33,19 @@
 </header>
 <main>
     <div class="container">
-        <h1>Match Score № ${responseMatchScoreDto.matchId}</h1>
+        <h1>Match Score No ${responseMatchScoreDto.matchId}</h1>
         <div class="current-match-image"></div>
+
+        <!-- TODO : сделать кнопки перехода на новый матч или к списку матчей, заблокировать кнопки SCORE-->
+        <%
+            ResponseMatchScoreDto responseMatchScoreDto = (ResponseMatchScoreDto) request.getAttribute("responseMatchScoreDto");
+            if (responseMatchScoreDto.getWinner() != null) {
+        %>
+        <div class="winner">
+            <h2>Winner is: ${responseMatchScoreDto.winner.name}</h2>
+        </div>
+        <% } %>
+
         <section class="score">
             <table class="table">
                 <thead class="result">
@@ -74,6 +86,7 @@
                 </tbody>
             </table>
         </section>
+
     </div>
 </main>
 <footer>
