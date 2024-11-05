@@ -15,7 +15,7 @@ public class MatchResultService {
             setWinner(match, player1Id);
             return player1Id;
         } else if (match.getMatchScore().getSetScorePlayer2() == WINNING_SET_COUNT) {
-            setWinner(match, player1Id);
+            setWinner(match, player2Id);
             return player2Id;
         } else {
         // TODO : доделать
