@@ -57,31 +57,41 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 <tr class="player1">
                     <td class="table-text">${responseMatchScoreDto.match.player1Id.name}</td>
                     <td class="table-text">${responseMatchScoreDto.match.matchScore.setScorePlayer1}</td>
                     <td class="table-text">${responseMatchScoreDto.match.matchScore.gameScorePlayer1}</td>
                     <td class="table-text">${responseMatchScoreDto.match.matchScore.pointScorePlayer1}</td>
-                    <td class="table-text">
-                        <form action="${pageContext.request.contextPath}/match-score?uuid=${responseMatchScoreDto.matchId}" method="POST">
-                            <input type="hidden" name="winnerId" value="${responseMatchScoreDto.match.player1Id.id}">
-                            <input type="hidden" name="matchId" value="${responseMatchScoreDto.matchId}">
-                            <button type="submit">Score</button>
-                        </form>
-                    </td>
+                        <%
+                            if (responseMatchScoreDto.getWinner() == null) {
+                        %>
+                            <td class="table-text">
+                                <form action="${pageContext.request.contextPath}/match-score?uuid=${responseMatchScoreDto.matchId}" method="POST">
+                                    <input type="hidden" name="winnerId" value="${responseMatchScoreDto.match.player1Id.id}">
+                                    <input type="hidden" name="matchId" value="${responseMatchScoreDto.matchId}">
+                                    <button type="submit">Score</button>
+                                </form>
+                            </td>
+                        <% } %>
                 </tr>
+
                 <tr class="player2">
                     <td class="table-text">${responseMatchScoreDto.match.player2Id.name}</td>
                     <td class="table-text">${responseMatchScoreDto.match.matchScore.setScorePlayer2}</td>
                     <td class="table-text">${responseMatchScoreDto.match.matchScore.gameScorePlayer2}</td>
                     <td class="table-text">${responseMatchScoreDto.match.matchScore.pointScorePlayer2}</td>
-                    <td class="table-text">
-                        <form action="${pageContext.request.contextPath}/match-score?uuid=${responseMatchScoreDto.matchId}" method="POST">
-                            <input type="hidden" name="winnerId" value="${responseMatchScoreDto.match.player2Id.id}">
-                            <input type="hidden" name="matchId" value="${responseMatchScoreDto.matchId}">
-                            <button type="submit">Score</button>
-                        </form>
-                    </td>
+                    <%
+                        if (responseMatchScoreDto.getWinner() == null) {
+                    %>
+                        <td class="table-text">
+                            <form action="${pageContext.request.contextPath}/match-score?uuid=${responseMatchScoreDto.matchId}" method="POST">
+                                <input type="hidden" name="winnerId" value="${responseMatchScoreDto.match.player2Id.id}">
+                                <input type="hidden" name="matchId" value="${responseMatchScoreDto.matchId}">
+                                <button type="submit">Score</button>
+                            </form>
+                        </td>
+                    <% } %>
                 </tr>
                 </tbody>
             </table>

@@ -4,7 +4,7 @@ import com.runaumov.dao.MatchesDao;
 import com.runaumov.dto.RequestMatchesDto;
 import com.runaumov.dto.ResponseMatchesDto;
 import com.runaumov.entity.Match;
-import com.runaumov.service.MatchesService;
+import com.runaumov.service.PlayerService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,7 +20,7 @@ public class MatchesServlet extends HttpServlet {
 
     private final MatchesDao matchesDao = new MatchesDao();
     private final ModelMapper modelMapper = new ModelMapper();
-    private final MatchesService matchesService = new MatchesService();
+    private final PlayerService playerService = new PlayerService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,14 +43,14 @@ public class MatchesServlet extends HttpServlet {
 
         RequestMatchesDto requestMatchesDto = new RequestMatchesDto(playerName, pageNum);
 
-        List<Match> matches = matchesService.getPlayers(requestMatchesDto, pageNum, pageSize);
+        List<Match> matches = playerService.getPlayers(requestMatchesDto, pageNum, pageSize);
 
         List<ResponseMatchesDto> responseMatchesDto = new ArrayList<>();
         for (Match match : matches) {
             responseMatchesDto.add(modelMapper.map(match, ResponseMatchesDto.class));
         }
 
-        int totalPages = matchesService.getTotalPages(pageSize, playerName);
+        int totalPages = playerService.getTotalPages(pageSize, playerName);
         req.setAttribute("matches", responseMatchesDto);
         req.setAttribute("currentPage", pageNum);
         req.setAttribute("totalPages", totalPages);

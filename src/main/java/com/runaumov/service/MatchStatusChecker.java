@@ -38,6 +38,6 @@ public class MatchStatusChecker {
     public boolean isMatchWin(Match match) {
         int setScoreForPlayer1 = match.getMatchScore().getSetScorePlayer1();
         int setScoreForPlayer2 = match.getMatchScore().getSetScorePlayer2();
-        return setScoreForPlayer1 == WINNING_SET_COUNT || setScoreForPlayer2 ==WINNING_SET_COUNT;
+        return setScoreForPlayer1 == WINNING_SET_COUNT || setScoreForPlayer2 == WINNING_SET_COUNT;
     }
 }
