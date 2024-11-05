@@ -73,7 +73,7 @@ public class ScoreService {
             match.getMatchScore().setPointScorePlayer2(String.valueOf(PointScore.LOVE));
             return match;
         } else if (player2.getId() == winnerId) {
-            match.getMatchScore().setSetScorePlayer1(match.getMatchScore().getSetScorePlayer2() + 1);
+            match.getMatchScore().setSetScorePlayer2(match.getMatchScore().getSetScorePlayer2() + 1);
             match.getMatchScore().setPointScorePlayer1(String.valueOf(PointScore.LOVE));
             match.getMatchScore().setPointScorePlayer2(String.valueOf(PointScore.LOVE));
             return match;
