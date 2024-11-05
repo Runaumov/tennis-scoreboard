@@ -37,7 +37,7 @@ public class NewMatchService {
         return matchId;
     }
 
-    // TODO: подумать над player.get()
+    // TODO: подумать над player.get(), т.к. он не только возвращает игрока, но и добавляет его
     private Player getPlayer(String playerName) {
         if (!isPlayerExist(playerName)) {
             addPlayerInDatabase(playerName);

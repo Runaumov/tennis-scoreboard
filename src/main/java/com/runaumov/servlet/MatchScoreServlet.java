@@ -55,6 +55,8 @@ public class MatchScoreServlet extends HttpServlet {
 
         if (matchStatusChecker.isMatchWin(updatedMatch)) {
             Player winner = matchResultService.getWinner(updatedMatch);
+            MatchRecordService matchRecordService = new MatchRecordService();
+            matchRecordService.addMatch(updatedMatch);
             responseMatchScoreDto.setWinner(winner);
         }
 

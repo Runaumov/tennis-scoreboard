@@ -10,13 +10,20 @@ public class MatchResultService {
         Player player1Id = match.getPlayer1Id();
         Player player2Id = match.getPlayer2Id();
 
+        // TODO : всрато выглядит, переделать
         if (match.getMatchScore().getSetScorePlayer1() == WINNING_SET_COUNT) {
+            setWinner(match, player1Id);
             return player1Id;
         } else if (match.getMatchScore().getSetScorePlayer2() == WINNING_SET_COUNT) {
+            setWinner(match, player1Id);
             return player2Id;
         } else {
         // TODO : доделать
         throw new IllegalArgumentException("Ошибка");
         }
+    }
+
+    private void setWinner(Match match, Player winner) {
+        match.setWinner(winner);
     }
 }

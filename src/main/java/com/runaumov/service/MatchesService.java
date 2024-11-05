@@ -5,7 +5,7 @@ import com.runaumov.dto.RequestMatchesDto;
 import com.runaumov.entity.Match;
 import java.util.List;
 
-public class PlayerService {
+public class MatchesService {
     MatchesDao matchesDao = new MatchesDao();
 
     // TODO: подумать над названием метода
@@ -35,6 +35,5 @@ public class PlayerService {
 
         return (int) Math.ceil((double) totalCount / pageSize);
     }
-
 
 }

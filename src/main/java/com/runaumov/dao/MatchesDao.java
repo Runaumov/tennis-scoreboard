@@ -53,6 +53,14 @@ public class MatchesDao implements Dao<Match> {
                 .list();
     }
 
+    // TODO: добавить rollback и чекнуть остальные методы в дао
+    public void addMatch (Match match) {
+        @Cleanup Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.persist(match);
+        session.getTransaction().commit();
+    }
+
     public long countByName(String playerName) {
 
         @Cleanup Session session = sessionFactory.openSession();
