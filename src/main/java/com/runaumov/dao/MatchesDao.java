@@ -3,8 +3,10 @@ package com.runaumov.dao;
 import com.runaumov.HibernateUtil;
 import com.runaumov.entity.Match;
 import com.runaumov.entity.Player;
+import com.runaumov.exceptions.DatabaseAccessException;
 import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -26,10 +28,14 @@ public class MatchesDao implements Dao<Match> {
 
     public List<Match> findAllWithPagination(int offset, int pageSize) {
         @Cleanup Session session = sessionFactory.openSession();
-        return session.createQuery("SELECT m FROM Match m", Match.class)
-                .setFirstResult(offset)
-                .setMaxResults(pageSize)
-                .getResultList();
+        try {
+            return session.createQuery("SELECT m FROM Match m", Match.class)
+                    .setFirstResult(offset)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        } catch (HibernateException e) {
+            throw new DatabaseAccessException("Error fetching matches with pagination");
+        }
     }
 
     public List<Match> findByName(String name, int offset, int pageSize) {

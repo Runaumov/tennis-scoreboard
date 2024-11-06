@@ -12,4 +12,5 @@ document.addEventListener("DOMContentLoaded", function () {
     resetButton.addEventListener("click", function () {
         filterInput.value = '';
     });
+
 });
