@@ -15,22 +15,11 @@ import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class MatchesDao implements Dao<Match> {
+public class MatchesDao {
 
     private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-    @Override
-    public List<Match> findAll() {
-        @Cleanup Session session = sessionFactory.openSession();
-
-        try {
-            return session.createQuery("SELECT m FROM Match m", Match.class)
-                    .getResultList();
-        } catch (HibernateException e) {
-            throw new DatabaseAccessException("Database is not responding");
-        }
-    }
-
+    // TODO : м.б. стоит возвращать Optional
     public List<Match> findAllWithPagination(int offset, int pageSize) {
         @Cleanup Session session = sessionFactory.openSession();
 
@@ -44,6 +33,7 @@ public class MatchesDao implements Dao<Match> {
         }
     }
 
+    // TODO : м.б. стоит возвращать Optional
     public List<Match> findMatchByPlayerName(String name, int offset, int pageSize) {
         @Cleanup Session session = sessionFactory.openSession();
 

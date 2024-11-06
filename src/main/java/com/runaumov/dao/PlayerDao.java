@@ -2,38 +2,43 @@ package com.runaumov.dao;
 
 import com.runaumov.HibernateUtil;
 import com.runaumov.entity.Player;
+import com.runaumov.exceptions.DatabaseAccessException;
 import lombok.Cleanup;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
-import java.util.List;
 import java.util.Optional;
 
-public class PlayerDao implements Dao<Player> {
+public class PlayerDao {
 
     private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     public Optional<Player> findByName(String name) {
         @Cleanup Session session = sessionFactory.openSession();
-        Player player = session.createQuery("SELECT p FROM Player p WHERE p.name = :name", Player.class)
-                .setParameter("name", name)
-                .uniqueResult();
 
-        return Optional.ofNullable(player);
-    }
+        try {
+            Player player = session.createQuery("SELECT p FROM Player p WHERE p.name = :name", Player.class)
+                    .setParameter("name", name)
+                    .uniqueResult();
 
-    @Override
-    public List<Player> findAll() {
-        @Cleanup Session session = sessionFactory.openSession();
-        return session.createQuery("SELECT p FROM Player p", Player.class)
-                .getResultList();
+            return Optional.ofNullable(player);
+        } catch (HibernateException e) {
+            throw new DatabaseAccessException("Database is not responding");
+        }
     }
 
     // TODO: добавить rollback и чекнуть остальные методы в дао
     public void addPlayer(Player player) {
         @Cleanup Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.persist(player);
-        session.getTransaction().commit();
+        try {
+            session.beginTransaction();
+            session.persist(player);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            throw new DatabaseAccessException("Adding a player is not available");
+        }
     }
 }
