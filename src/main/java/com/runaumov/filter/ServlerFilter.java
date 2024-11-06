@@ -2,11 +2,15 @@ package com.runaumov.filter;
 
 import com.runaumov.exceptions.DatabaseAccessException;
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+@WebFilter(value = {
+        "/matches", "/match-score", "/new-match"
+})
 public class ServlerFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -30,7 +34,7 @@ public class ServlerFilter implements Filter {
         request.setAttribute("errorMessage", message);
         request.setAttribute("statusCode", statusCode);
         response.setStatus(statusCode);
-        request.getRequestDispatcher("/error.jsp").forward(request, response);;
+        request.getRequestDispatcher("error.jsp").forward(request, response);;
     }
 
     @Override
