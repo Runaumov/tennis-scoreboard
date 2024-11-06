@@ -16,7 +16,7 @@ public class MatchesService {
         String name = requestMatchesDto.getName();
 
         if (name != null) {
-            players = matchesDao.findByName(name, offset, pageSize);
+            players = matchesDao.findMatchByPlayerName(name, offset, pageSize);
         } else {
             players = matchesDao.findAllWithPagination(offset, pageSize);
         }

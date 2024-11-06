@@ -7,6 +7,7 @@ import com.runaumov.exceptions.DatabaseAccessException;
 import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.HibernateException;
+import org.hibernate.QueryException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -20,14 +21,19 @@ public class MatchesDao implements Dao<Match> {
 
     @Override
     public List<Match> findAll() {
-
         @Cleanup Session session = sessionFactory.openSession();
-        return session.createQuery("SELECT m FROM Match m", Match.class)
-                .getResultList();
+
+        try {
+            return session.createQuery("SELECT m FROM Match m", Match.class)
+                    .getResultList();
+        } catch (HibernateException e) {
+            throw new DatabaseAccessException("Database is not responding");
+        }
     }
 
     public List<Match> findAllWithPagination(int offset, int pageSize) {
         @Cleanup Session session = sessionFactory.openSession();
+
         try {
             return session.createQuery("SELECT m FROM Match m", Match.class)
                     .setFirstResult(offset)
@@ -38,54 +44,73 @@ public class MatchesDao implements Dao<Match> {
         }
     }
 
-    public List<Match> findByName(String name, int offset, int pageSize) {
+    public List<Match> findMatchByPlayerName(String name, int offset, int pageSize) {
         @Cleanup Session session = sessionFactory.openSession();
 
-        Player player = session.createQuery(
-                        "SELECT p FROM Player p WHERE p.name = :name", Player.class)
-                .setParameter("name", name)
-                .uniqueResult();
+        try {
+            Player player = session.createQuery(
+                            "SELECT p FROM Player p WHERE p.name = :name", Player.class)
+                    .setParameter("name", name)
+                    .uniqueResult();
 
-        // Проверяем, найден ли игрок
-        if (player == null) {
-            return Collections.emptyList(); // Если игрок не найден, возвращаем пустой список
+            if (player == null) {
+                return Collections.emptyList();
+            }
+
+            return session.createQuery(
+                            "SELECT m FROM Match m WHERE m.player1Id = :player OR m.player2Id = :player", Match.class)
+                    .setParameter("player", player)
+                    .setFirstResult(offset)
+                    .setMaxResults(pageSize)
+                    .list();
+        } catch (HibernateException e) {
+            throw new DatabaseAccessException("Database is not responding");
         }
-
-        return session.createQuery(
-                        "SELECT m FROM Match m WHERE m.player1Id = :player OR m.player2Id = :player", Match.class)
-                .setParameter("player", player)
-                .setFirstResult(offset)
-                .setMaxResults(pageSize)
-                .list();
     }
 
-    // TODO: добавить rollback и чекнуть остальные методы в дао
     public void addMatch (Match match) {
         @Cleanup Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.persist(match);
-        session.getTransaction().commit();
+
+        try {
+            session.beginTransaction();
+            session.persist(match);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            throw new DatabaseAccessException("Adding a match is not available");
+        }
     }
 
     public long countByName(String playerName) {
-
         @Cleanup Session session = sessionFactory.openSession();
-        Player player = session.createQuery("SELECT p FROM Player p WHERE p.name = :name", Player.class)
-                .setParameter("name", playerName)
-                .uniqueResult();
 
-        if (player == null) {
-            return 0;
+        try {
+            Player player = session.createQuery("SELECT p FROM Player p WHERE p.name = :name", Player.class)
+                    .setParameter("name", playerName)
+                    .uniqueResult();
+
+            if (player == null) {
+                return 0;
+            }
+
+            return session.createQuery("SELECT COUNT(m) FROM Match m WHERE m.player1Id = :player OR m.player2Id = :player", Long.class)
+                    .setParameter("player", player)
+                    .getSingleResult();
+        } catch (HibernateException e) {
+            throw new DatabaseAccessException("Database is not responding");
         }
-
-        return session.createQuery("SELECT COUNT(m) FROM Match m WHERE m.player1Id = :player OR m.player2Id = :player", Long.class)
-                .setParameter("player", player)
-                .getSingleResult();
     }
 
     public long countAll() {
         @Cleanup Session session = sessionFactory.openSession();
-        return session.createQuery("SELECT COUNT(m) FROM Match m", Long.class)
-                .getSingleResult();
+
+        try {
+            return session.createQuery("SELECT COUNT(m) FROM Match m", Long.class)
+                    .getSingleResult();
+        } catch (HibernateException e) {
+            throw new DatabaseAccessException("Database is not responding");
+        }
     }
 }
