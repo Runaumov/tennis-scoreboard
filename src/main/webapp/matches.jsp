@@ -8,10 +8,11 @@
     <div class="container">
         <h1>Matches</h1>
         <div class="input-container">
-            <input class="input-filter" id="filter-input" placeholder="Filter by name" type="text" />
-            <div>
+            <form action="${pageContext.request.contextPath}/matches" method="GET">
+                <input class="input-filter" id="filter-input" placeholder="Filter by name" type="text" name="filter-input" />
+                <button class="btn-filter" id="apply-filter-btn">Apply Filter</button>
                 <button class="btn-filter" id="reset-filter-btn">Reset Filter</button>
-            </div>
+            </form>
         </div>
 
         <table class="table-matches">

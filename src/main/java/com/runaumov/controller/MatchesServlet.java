@@ -34,7 +34,7 @@ public class MatchesServlet extends HttpServlet {
         });
 
         String page = req.getParameter("page");
-        String playerName = req.getParameter("filter_by_player_name");
+        String playerName = req.getParameter("filter-input");
 
         // TODO: подумать над именем переменной
         // TODO: потом вынести в отдельный класс-валидатор

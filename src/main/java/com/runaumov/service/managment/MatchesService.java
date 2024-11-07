@@ -15,7 +15,8 @@ public class MatchesService {
         int offset = (pageNum - 1) * pageSize;
         String name = requestMatchesDto.getName();
 
-        if (name != null) {
+        // TODO : второе условие - костыль
+        if (name != null && !name.equals("")) {
             players = matchDao.findMatchByPlayerName(name, offset, pageSize);
         } else {
             players = matchDao.findAllWithPagination(offset, pageSize);
