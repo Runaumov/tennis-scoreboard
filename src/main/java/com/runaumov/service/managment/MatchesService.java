@@ -1,12 +1,12 @@
 package com.runaumov.service.managment;
 
-import com.runaumov.dao.MatchesDao;
+import com.runaumov.dao.MatchDao;
 import com.runaumov.dto.request.RequestMatchesDto;
 import com.runaumov.entity.Match;
 import java.util.List;
 
 public class MatchesService {
-    MatchesDao matchesDao = new MatchesDao();
+    MatchDao matchDao = new MatchDao();
 
     // TODO: подумать над названием метода
     public List<Match> getPlayers(RequestMatchesDto requestMatchesDto, int pageNum, int pageSize) {
@@ -16,9 +16,9 @@ public class MatchesService {
         String name = requestMatchesDto.getName();
 
         if (name != null) {
-            players = matchesDao.findMatchByPlayerName(name, offset, pageSize);
+            players = matchDao.findMatchByPlayerName(name, offset, pageSize);
         } else {
-            players = matchesDao.findAllWithPagination(offset, pageSize);
+            players = matchDao.findAllWithPagination(offset, pageSize);
         }
 
         return players;
@@ -28,9 +28,9 @@ public class MatchesService {
         long totalCount;
 
         if (playerName != null) {
-            totalCount = matchesDao.countByName(playerName);
+            totalCount = matchDao.countByName(playerName);
         } else {
-            totalCount = matchesDao.countAll();
+            totalCount = matchDao.countAll();
         }
 
         return (int) Math.ceil((double) totalCount / pageSize);

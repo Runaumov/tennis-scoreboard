@@ -9,16 +9,14 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
 import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class MatchesDao {
+public class MatchDao {
 
     private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-    // TODO : м.б. стоит возвращать Optional
     public List<Match> findAllWithPagination(int offset, int pageSize) {
         @Cleanup Session session = sessionFactory.openSession();
 
@@ -32,7 +30,6 @@ public class MatchesDao {
         }
     }
 
-    // TODO : м.б. стоит возвращать Optional
     public List<Match> findMatchByPlayerName(String name, int offset, int pageSize) {
         @Cleanup Session session = sessionFactory.openSession();
 

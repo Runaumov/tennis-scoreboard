@@ -1,6 +1,6 @@
 package com.runaumov.controller;
 
-import com.runaumov.dao.MatchesDao;
+import com.runaumov.dao.MatchDao;
 import com.runaumov.dto.request.RequestMatchesDto;
 import com.runaumov.dto.response.ResponseMatchesDto;
 import com.runaumov.entity.Match;
@@ -18,7 +18,7 @@ import java.util.List;
 @WebServlet("/matches")
 public class MatchesServlet extends HttpServlet {
 
-    private final MatchesDao matchesDao = new MatchesDao();
+    private final MatchDao matchDao = new MatchDao();
     private final ModelMapper modelMapper = new ModelMapper();
     private final MatchesService matchesService = new MatchesService();
 
