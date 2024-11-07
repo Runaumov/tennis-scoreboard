@@ -23,15 +23,14 @@ public class MatchesDao {
     public List<Match> findAllWithPagination(int offset, int pageSize) {
         @Cleanup Session session = sessionFactory.openSession();
 
-//        try {
-//            return session.createQuery("SELECT m FROM Match m", Match.class)
-//                    .setFirstResult(offset)
-//                    .setMaxResults(pageSize)
-//                    .getResultList();
-//        } catch (HibernateException e) {
-//            throw new DatabaseAccessException("Error fetching matches with pagination");
-//        }
-        throw new DatabaseAccessException("Error fetching matches with pagination");
+        try {
+            return session.createQuery("SELECT m FROM Match m", Match.class)
+                    .setFirstResult(offset)
+                    .setMaxResults(pageSize)
+                    .getResultList();
+        } catch (HibernateException e) {
+            throw new DatabaseAccessException("Error fetching matches with pagination");
+        }
     }
 
     // TODO : м.б. стоит возвращать Optional

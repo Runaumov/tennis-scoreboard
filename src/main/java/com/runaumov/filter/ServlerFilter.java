@@ -1,6 +1,8 @@
 package com.runaumov.filter;
 
 import com.runaumov.exceptions.DatabaseAccessException;
+import com.runaumov.exceptions.ModelAlreadyExistException;
+import com.runaumov.exceptions.ModelNotFoundException;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,6 +29,10 @@ public class ServlerFilter implements Filter {
             filterChain.doFilter(request, response);
         } catch (DatabaseAccessException e) {
             handleException(httpServletRequest, httpServletResponse, e.getMessage(), HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (ModelAlreadyExistException e) {
+            handleException(httpServletRequest, httpServletResponse, e.getMessage(), HttpServletResponse.SC_CONFLICT);
+        } catch (ModelNotFoundException e) {
+            handleException(httpServletRequest, httpServletResponse, e.getMessage(), HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
