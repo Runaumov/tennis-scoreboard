@@ -1,7 +1,7 @@
 package com.runaumov.service;
 
 import com.runaumov.MatchType;
-import com.runaumov.entity.MatchScore;
+import com.runaumov.MatchScore;
 import com.runaumov.dto.RequestMatchScoreDto;
 import com.runaumov.entity.Match;
 import com.runaumov.entity.Player;

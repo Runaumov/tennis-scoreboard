@@ -1,8 +1,6 @@
-package com.runaumov.entity;
+package com.runaumov;
 
-import com.runaumov.MatchType;
 import lombok.*;
-import java.util.List;
 
 @Builder
 @AllArgsConstructor

@@ -7,7 +7,7 @@ import com.runaumov.MatchStorage;
 import com.runaumov.dao.PlayerDao;
 import com.runaumov.dto.RequestNewMatchDto;
 import com.runaumov.entity.Match;
-import com.runaumov.entity.MatchScore;
+import com.runaumov.MatchScore;
 import com.runaumov.entity.Player;
 import java.util.*;
 

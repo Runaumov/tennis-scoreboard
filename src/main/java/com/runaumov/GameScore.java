@@ -1,4 +1,4 @@
-package com.runaumov.entity;
+package com.runaumov;
 
 public enum GameScore {
     LOVE, FIFTEEN, THIRTY, FORTY, AD;
