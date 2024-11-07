@@ -1,4 +1,4 @@
-package com.runaumov.exceptions;
+package com.runaumov.exception;
 
 public class DatabaseAccessException extends RuntimeException {
 

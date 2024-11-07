@@ -1,6 +1,5 @@
-package com.runaumov.dto;
+package com.runaumov.dto.response;
 
-import com.runaumov.entity.Player;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

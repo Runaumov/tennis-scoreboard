@@ -1,7 +1,7 @@
-package com.runaumov.service;
+package com.runaumov.service.managment;
 
 import com.runaumov.dao.MatchesDao;
-import com.runaumov.dto.RequestMatchesDto;
+import com.runaumov.dto.request.RequestMatchesDto;
 import com.runaumov.entity.Match;
 import java.util.List;
 

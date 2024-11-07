@@ -1,4 +1,4 @@
-package com.runaumov.dto;
+package com.runaumov.dto.response;
 
 import com.runaumov.entity.Match;
 import com.runaumov.entity.Player;

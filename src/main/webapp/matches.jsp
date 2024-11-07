@@ -1,4 +1,4 @@
-<%@ page import="com.runaumov.dto.ResponseMatchesDto" %>
+<%@ page import="com.runaumov.dto.response.ResponseMatchesDto" %>
 <%@ page import="java.util.List" %>
 <html>
 <head>

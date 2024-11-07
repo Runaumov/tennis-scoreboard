@@ -1,7 +1,7 @@
-package com.runaumov.servlet;
+package com.runaumov.controller;
 
-import com.runaumov.dto.RequestNewMatchDto;
-import com.runaumov.service.NewMatchService;
+import com.runaumov.dto.request.RequestNewMatchDto;
+import com.runaumov.service.managment.NewMatchService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

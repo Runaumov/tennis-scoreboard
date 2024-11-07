@@ -1,6 +1,6 @@
 package com.runaumov.entity;
 
-import com.runaumov.MatchScore;
+import com.runaumov.model.MatchScore;
 import jakarta.persistence.*;
 import lombok.*;
 

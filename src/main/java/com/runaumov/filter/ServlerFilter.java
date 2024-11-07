@@ -1,8 +1,8 @@
 package com.runaumov.filter;
 
-import com.runaumov.exceptions.DatabaseAccessException;
-import com.runaumov.exceptions.ModelAlreadyExistException;
-import com.runaumov.exceptions.ModelNotFoundException;
+import com.runaumov.exception.DatabaseAccessException;
+import com.runaumov.exception.ModelAlreadyExistException;
+import com.runaumov.exception.ModelNotFoundException;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;

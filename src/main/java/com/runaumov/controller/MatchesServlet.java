@@ -1,10 +1,10 @@
-package com.runaumov.servlet;
+package com.runaumov.controller;
 
 import com.runaumov.dao.MatchesDao;
-import com.runaumov.dto.RequestMatchesDto;
-import com.runaumov.dto.ResponseMatchesDto;
+import com.runaumov.dto.request.RequestMatchesDto;
+import com.runaumov.dto.response.ResponseMatchesDto;
 import com.runaumov.entity.Match;
-import com.runaumov.service.MatchesService;
+import com.runaumov.service.managment.MatchesService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

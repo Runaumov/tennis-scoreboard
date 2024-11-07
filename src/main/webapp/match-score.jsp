@@ -1,4 +1,4 @@
-<%@ page import="com.runaumov.dto.ResponseMatchScoreDto" %>
+<%@ page import="com.runaumov.dto.response.ResponseMatchScoreDto" %>
 <html>
 <head>
     <%@include file="header.jsp"%>

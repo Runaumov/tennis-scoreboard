@@ -1,4 +1,4 @@
-package com.runaumov.exceptions;
+package com.runaumov.exception;
 
 public class ModelAlreadyExistException extends RuntimeException {
 

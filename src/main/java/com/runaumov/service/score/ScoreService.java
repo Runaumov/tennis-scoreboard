@@ -1,7 +1,7 @@
-package com.runaumov.service;
+package com.runaumov.service.score;
 
-import com.runaumov.MatchType;
-import com.runaumov.PointScore;
+import com.runaumov.model.MatchType;
+import com.runaumov.model.PointScore;
 import com.runaumov.entity.Match;
 import com.runaumov.entity.Player;
 

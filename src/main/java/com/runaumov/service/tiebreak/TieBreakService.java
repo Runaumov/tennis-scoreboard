@@ -1,7 +1,7 @@
-package com.runaumov.service;
+package com.runaumov.service.tiebreak;
 
-import com.runaumov.MatchType;
-import com.runaumov.MatchScore;
+import com.runaumov.model.MatchType;
+import com.runaumov.model.MatchScore;
 
 public class TieBreakService {
 

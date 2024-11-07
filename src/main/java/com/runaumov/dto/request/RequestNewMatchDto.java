@@ -1,4 +1,4 @@
-package com.runaumov.dto;
+package com.runaumov.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

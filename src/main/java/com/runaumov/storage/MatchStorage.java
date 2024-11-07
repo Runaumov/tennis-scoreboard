@@ -1,4 +1,4 @@
-package com.runaumov;
+package com.runaumov.storage;
 
 import com.runaumov.entity.Match;
 

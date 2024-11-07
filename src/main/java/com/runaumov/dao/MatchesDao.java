@@ -1,13 +1,12 @@
 package com.runaumov.dao;
 
-import com.runaumov.HibernateUtil;
+import com.runaumov.util.HibernateUtil;
 import com.runaumov.entity.Match;
 import com.runaumov.entity.Player;
-import com.runaumov.exceptions.DatabaseAccessException;
+import com.runaumov.exception.DatabaseAccessException;
 import lombok.Cleanup;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.HibernateException;
-import org.hibernate.QueryException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 

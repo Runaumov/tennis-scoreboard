@@ -1,11 +1,16 @@
-package com.runaumov.servlet;
+package com.runaumov.controller;
 
-import com.runaumov.MatchStorage;
-import com.runaumov.dto.RequestMatchScoreDto;
-import com.runaumov.dto.ResponseMatchScoreDto;
+import com.runaumov.service.managment.MatchRecordService;
+import com.runaumov.service.score.MatchCalculateService;
+import com.runaumov.service.score.ScoreService;
+import com.runaumov.service.status.MatchResultService;
+import com.runaumov.service.status.MatchStatusChecker;
+import com.runaumov.service.tiebreak.TieBreakService;
+import com.runaumov.storage.MatchStorage;
+import com.runaumov.dto.request.RequestMatchScoreDto;
+import com.runaumov.dto.response.ResponseMatchScoreDto;
 import com.runaumov.entity.Match;
 import com.runaumov.entity.Player;
-import com.runaumov.service.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

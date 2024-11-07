@@ -1,10 +1,12 @@
-package com.runaumov.service;
+package com.runaumov.service.score;
 
-import com.runaumov.MatchType;
-import com.runaumov.MatchScore;
-import com.runaumov.dto.RequestMatchScoreDto;
+import com.runaumov.model.MatchType;
+import com.runaumov.model.MatchScore;
+import com.runaumov.dto.request.RequestMatchScoreDto;
 import com.runaumov.entity.Match;
 import com.runaumov.entity.Player;
+import com.runaumov.service.status.MatchStatusChecker;
+import com.runaumov.service.tiebreak.TieBreakService;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

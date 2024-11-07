@@ -1,4 +1,4 @@
-package com.runaumov.service;
+package com.runaumov.service.managment;
 
 import com.runaumov.dao.MatchesDao;
 import com.runaumov.entity.Match;

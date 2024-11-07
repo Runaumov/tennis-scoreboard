@@ -1,4 +1,4 @@
-package com.runaumov.service;
+package com.runaumov.service.status;
 
 import com.runaumov.entity.Match;
 import com.runaumov.entity.Player;

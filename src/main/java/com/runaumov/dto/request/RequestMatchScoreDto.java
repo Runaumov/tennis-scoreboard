@@ -1,4 +1,4 @@
-package com.runaumov.dto;
+package com.runaumov.dto.request;
 
 import com.runaumov.entity.Match;
 import lombok.AllArgsConstructor;

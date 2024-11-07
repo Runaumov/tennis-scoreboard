@@ -1,4 +1,4 @@
-package com.runaumov;
+package com.runaumov.model;
 
 public enum MatchType {
     NORMAL, TIEBREAK

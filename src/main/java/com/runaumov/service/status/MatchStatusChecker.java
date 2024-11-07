@@ -1,6 +1,6 @@
-package com.runaumov.service;
+package com.runaumov.service.status;
 
-import com.runaumov.PointScore;
+import com.runaumov.model.PointScore;
 import com.runaumov.entity.Match;
 
 public class MatchStatusChecker {

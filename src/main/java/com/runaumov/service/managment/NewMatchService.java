@@ -1,13 +1,13 @@
-package com.runaumov.service;
+package com.runaumov.service.managment;
 
 
-import com.runaumov.MatchType;
-import com.runaumov.PointScore;
-import com.runaumov.MatchStorage;
+import com.runaumov.model.MatchType;
+import com.runaumov.model.PointScore;
+import com.runaumov.storage.MatchStorage;
 import com.runaumov.dao.PlayerDao;
-import com.runaumov.dto.RequestNewMatchDto;
+import com.runaumov.dto.request.RequestNewMatchDto;
 import com.runaumov.entity.Match;
-import com.runaumov.MatchScore;
+import com.runaumov.model.MatchScore;
 import com.runaumov.entity.Player;
 import java.util.*;
 

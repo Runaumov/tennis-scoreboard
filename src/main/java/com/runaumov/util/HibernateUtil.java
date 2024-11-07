@@ -1,7 +1,6 @@
-package com.runaumov;
+package com.runaumov.util;
 
 import lombok.Getter;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.Configuration;
