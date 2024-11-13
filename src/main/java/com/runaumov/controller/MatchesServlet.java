@@ -51,6 +51,7 @@ public class MatchesServlet extends HttpServlet {
         }
 
         int totalPages = matchesService.getTotalPages(pageSize, playerName);
+
         req.setAttribute("matches", responseMatchesDto);
         req.setAttribute("currentPage", pageNum);
         req.setAttribute("totalPages", totalPages);

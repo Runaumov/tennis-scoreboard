@@ -44,17 +44,21 @@
         </table>
 
         <div class="pagination">
-            <c:if test="${currentPage > 1}">
-                <a href="?page=${currentPage - 1}">&laquo; Prev page</a>
-            </c:if>
-
-            <c:forEach var="i" begin="1" end="${totalPages}">
-                <a href="?page=${i}" class="${i == currentPage ? 'active' : ''}">${i}</a>
-            </c:forEach>
-
-            <c:if test="${currentPage < totalPages}">
-                <a href="?page=${currentPage + 1}">Next page &raquo;</a>
-            </c:if>
+            <%
+                int currentPage = (Integer) request.getAttribute("currentPage");
+                int totalPages = (Integer) request.getAttribute("totalPages");
+                if (currentPage > 1) {
+            %>
+                <a class="prev" href="?page=${currentPage - 1}"> < </a>
+            <% } %>
+            <% for (int i = 1; i <= totalPages; i++) { %>
+            <a class="num-page <%= (i == currentPage) ? "current" : "" %>" href="?page=<%= i %>"><%= i %></a>
+            <% } %>
+            <%
+                if (currentPage < totalPages) {
+            %>
+                <a class="next" href="?page=${currentPage + 1}"> > </a>
+            <% } %>
         </div>
     </div>
 </main>
