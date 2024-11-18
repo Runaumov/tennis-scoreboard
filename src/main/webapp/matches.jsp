@@ -9,9 +9,10 @@
         <h1>Matches</h1>
         <div class="input-container">
             <form action="${pageContext.request.contextPath}/matches" method="GET">
-                <input class="input-filter" id="filter-input" placeholder="Filter by name" type="text" name="filter-input" />
+                <input class="input-filter" id="filter-input" placeholder="Filter by name" type="text" name="filter-input"
+                       value="<%= request.getParameter("filter-input") != null ? request.getParameter("filter-input") : "" %>" />
                 <button class="btn-filter" id="apply-filter-btn">Apply Filter</button>
-                <button class="btn-filter" id="reset-filter-btn">Reset Filter</button>
+                <a class="btn-filter" id="reset-filter-btn" href="${pageContext.request.contextPath}/matches">Reset Filter</a>
             </form>
         </div>
 
@@ -49,15 +50,16 @@
                 int totalPages = (Integer) request.getAttribute("totalPages");
                 if (currentPage > 1) {
             %>
-                <a class="prev" href="?page=${currentPage - 1}"> < </a>
+            <a class="prev" href="?page=${currentPage - 1}&filter-input=<%= request.getParameter("filter-input") != null ? request.getParameter("filter-input") : "" %>"> < </a>
             <% } %>
             <% for (int i = 1; i <= totalPages; i++) { %>
-            <a class="num-page <%= (i == currentPage) ? "current" : "" %>" href="?page=<%= i %>"><%= i %></a>
+            <a class="num-page <%= (i == currentPage) ? "current" : "" %>"
+               href="?page=<%= i %>&filter-input=<%= request.getParameter("filter-input") != null ? request.getParameter("filter-input") : "" %>"><%= i %></a>
             <% } %>
             <%
                 if (currentPage < totalPages) {
             %>
-                <a class="next" href="?page=${currentPage + 1}"> > </a>
+            <a class="next" href="?page=${currentPage + 1}&filter-input=<%= request.getParameter("filter-input") != null ? request.getParameter("filter-input") : "" %>"> > </a>
             <% } %>
         </div>
     </div>
