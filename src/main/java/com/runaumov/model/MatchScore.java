@@ -17,8 +17,8 @@ public class MatchScore {
     private MatchType matchType;
 
     public void setDefaultPointScore() {
-        this.pointScorePlayer1 = "0";
-        this.pointScorePlayer2 = "0";
+        this.pointScorePlayer1 = String.valueOf(PointScore.LOVE);
+        this.pointScorePlayer2 = String.valueOf(PointScore.LOVE);
     }
 
     public void setDefaultGameScore() {

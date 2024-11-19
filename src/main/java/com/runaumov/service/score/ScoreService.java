@@ -1,5 +1,6 @@
 package com.runaumov.service.score;
 
+import com.runaumov.exception.ScoreUpdateException;
 import com.runaumov.model.MatchScore;
 import com.runaumov.model.MatchType;
 import com.runaumov.model.PointScore;
@@ -31,7 +32,7 @@ public class ScoreService {
             return match;
         } else {
             // TODO : доделать
-            throw new IllegalArgumentException("Ошибка");
+            throw new ScoreUpdateException("Ошибка");
         }
     }
 
@@ -50,7 +51,7 @@ public class ScoreService {
             return match;
         } else {
             // TODO : доделать
-            throw new IllegalArgumentException("Ошибка");
+            throw new ScoreUpdateException("Ошибка");
         }
     }
 
@@ -69,7 +70,7 @@ public class ScoreService {
             matchScore.setPointScorePlayer2(updatedPointScore);
         } else {
             // TODO : доделать
-            throw new IllegalArgumentException("Ошибка");
+            throw new ScoreUpdateException("Ошибка");
         }
     }
 
@@ -86,7 +87,7 @@ public class ScoreService {
             matchScore.setPointScorePlayer2(incrementTiebreakScore(pointScorePlayerTwo));
         } else {
             // TODO : доделать
-            throw new IllegalArgumentException("Ошибка");
+            throw new ScoreUpdateException("Ошибка");
         }
     }
 
