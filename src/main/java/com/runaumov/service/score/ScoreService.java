@@ -1,5 +1,6 @@
 package com.runaumov.service.score;
 
+import com.runaumov.model.MatchScore;
 import com.runaumov.model.MatchType;
 import com.runaumov.model.PointScore;
 import com.runaumov.entity.Match;
@@ -9,6 +10,8 @@ public class ScoreService {
 
     // TODO : исключить дублирование
     public Match updatePointScore(Match match, int winnerId) {
+        MatchScore matchScore = match.getMatchScore();
+
         Player player1 = match.getPlayer1Id();
         Player player2 = match.getPlayer2Id();
         String pointScorePlayer1 = match.getMatchScore().getPointScorePlayer1();

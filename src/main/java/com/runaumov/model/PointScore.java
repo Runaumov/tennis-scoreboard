@@ -1,14 +1,13 @@
 package com.runaumov.model;
 
 public enum PointScore {
-    LOVE, FIFTEEN, THIRTY, FORTY, AD;
+    LOVE, FIFTEEN, THIRTY, FORTY, WIN;
 
     public static String getNextGameScore(PointScore currentPointScore) {
         PointScore[] values = PointScore.values();
-        for (int i = 0; i < values.length - 2; i++) {
-            if (values[i] == currentPointScore) {
-                return values[i + 1].name();
-            }
+        int index = currentPointScore.ordinal();
+        if (index < values.length - 1) {
+            return values[index + 1].name();
         }
         return values[0].name();
     }

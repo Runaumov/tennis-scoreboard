@@ -18,7 +18,8 @@ public class MatchStatusChecker {
         String pointScore1 = match.getMatchScore().getPointScorePlayer1();
         String pointScore2 = match.getMatchScore().getPointScorePlayer2();
 
-        return (pointScore1.toUpperCase().equals(PointScore.FORTY.name()) || pointScore2.toUpperCase().equals(PointScore.FORTY.name()));
+        return (pointScore1.toUpperCase().equals(PointScore.WIN.name()) ||
+                pointScore2.toUpperCase().equals(PointScore.WIN.name()));
     }
 
     // TODO : Возможно тут баг в условии. Надо чекнуть условия завершения сета

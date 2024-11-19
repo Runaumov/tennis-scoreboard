@@ -23,6 +23,7 @@ public class MatchCalculateService {
         Match currentMatch = requestMatchScoreDto.getMatch();
         MatchScore currentMatchScore = currentMatch.getMatchScore();
         int winnerId = requestMatchScoreDto.getPlayerId();
+        Match updatedMatch = scoreService.updatePointScore(currentMatch, winnerId);
 
         // TODO : реализовать
         if (checker.isDeuce()) {
@@ -54,7 +55,7 @@ public class MatchCalculateService {
         }
 
         tieBreakService.checkForTiebreak(currentMatchScore);
-        return scoreService.updatePointScore(currentMatch, winnerId);
+        return updatedMatch;
     }
 
 }
