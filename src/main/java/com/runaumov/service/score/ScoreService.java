@@ -31,8 +31,8 @@ public class ScoreService {
             matchScore.setDefaultPointScore();
             return match;
         } else {
-            // TODO : доделать
-            throw new ScoreUpdateException("Ошибка");
+            throw new ScoreUpdateException(
+                    String.format("Player ID '%s' does not match any player in the match.", winnerId));
         }
     }
 
@@ -50,8 +50,8 @@ public class ScoreService {
             matchScore.setDefaultPointScore();
             return match;
         } else {
-            // TODO : доделать
-            throw new ScoreUpdateException("Ошибка");
+            throw new ScoreUpdateException(
+                    String.format("Player ID '%s' does not match any player in the match.", winnerId));
         }
     }
 
@@ -69,8 +69,8 @@ public class ScoreService {
             String updatedPointScore = PointScore.getNextGameScore(PointScore.getPointScoreFromString(pointScorePlayerTwo));
             matchScore.setPointScorePlayer2(updatedPointScore);
         } else {
-            // TODO : доделать
-            throw new ScoreUpdateException("Ошибка");
+            throw new ScoreUpdateException(
+                    String.format("Player ID '%s' does not match any player in the match.", winnerId));
         }
     }
 
@@ -86,8 +86,8 @@ public class ScoreService {
         } else if (playerTwoId == winnerId) {
             matchScore.setPointScorePlayer2(incrementTiebreakScore(pointScorePlayerTwo));
         } else {
-            // TODO : доделать
-            throw new ScoreUpdateException("Ошибка");
+            throw new ScoreUpdateException(
+                    String.format("Player ID '%s' does not match any player in the match.", winnerId));
         }
     }
 
