@@ -4,61 +4,30 @@ import com.runaumov.model.MatchScore;
 import com.runaumov.model.MatchType;
 import com.runaumov.model.PointScore;
 import com.runaumov.entity.Match;
-import com.runaumov.entity.Player;
 
 public class ScoreService {
 
-    // TODO : исключить дублирование
     public Match updatePointScore(Match match, int winnerId) {
-        MatchScore matchScore = match.getMatchScore();
-
-        Player player1 = match.getPlayer1Id();
-        Player player2 = match.getPlayer2Id();
-        String pointScorePlayer1 = match.getMatchScore().getPointScorePlayer1();
-        String pointScorePlayer2 = match.getMatchScore().getPointScorePlayer2();
-
-        // TODO : отрефакторить
         if (match.getMatchScore().getMatchType().equals(MatchType.TIEBREAK)) {
-            if (player1.getId() == winnerId) {
-                int pointScorePlayer1Int = Integer.parseInt(pointScorePlayer1) + 1;
-                pointScorePlayer1 = String.valueOf(pointScorePlayer1Int);
-                match.getMatchScore().setPointScorePlayer1(pointScorePlayer1);
-            } else if (player2.getId() == winnerId) {
-                int pointScorePlayer2Int = Integer.parseInt(pointScorePlayer2) + 1;
-                pointScorePlayer2 = String.valueOf(pointScorePlayer2Int);
-                match.getMatchScore().setPointScorePlayer2(pointScorePlayer2);
-            }
-            return match;
-
+            updateTiebreakScore(match, winnerId);
         } else {
-            if (player1.getId() == winnerId) {
-                String updatedPointScore = PointScore.getNextGameScore(PointScore.getPointScoreFromString(pointScorePlayer1));
-                match.getMatchScore().setPointScorePlayer1(updatedPointScore);
-                return match;
-            } else if (player2.getId() == winnerId) {
-                String updatedPointScore = PointScore.getNextGameScore(PointScore.getPointScoreFromString(pointScorePlayer2));
-                match.getMatchScore().setPointScorePlayer2(updatedPointScore);
-                return match;
-            } else {
-                // TODO : доделать
-                throw new IllegalArgumentException("Ошибка");
-            }
+            updateNormalScore(match, winnerId);
         }
-    }
+        return match;
+        }
 
-    // TODO : исключить дублирование
     public Match updateGameScore(Match match, int winnerId) {
-        Player player1 = match.getPlayer1Id();
-        Player player2 = match.getPlayer2Id();
-        if (player1.getId() == winnerId) {
-            match.getMatchScore().setGameScorePlayer1(match.getMatchScore().getGameScorePlayer1() + 1);
-            match.getMatchScore().setPointScorePlayer1(String.valueOf(PointScore.LOVE));
-            match.getMatchScore().setPointScorePlayer2(String.valueOf(PointScore.LOVE));
+        MatchScore matchScore = match.getMatchScore();
+        int playerOneId = match.getPlayer1Id().getId();
+        int playerTwoId = match.getPlayer2Id().getId();
+
+        if (playerOneId == winnerId) {
+            matchScore.setGameScorePlayer1(match.getMatchScore().getGameScorePlayer1() + 1);
+            matchScore.setDefaultPointScore();
             return match;
-        } else if (player2.getId() == winnerId) {
-            match.getMatchScore().setGameScorePlayer2(match.getMatchScore().getGameScorePlayer2() + 1);
-            match.getMatchScore().setPointScorePlayer1(String.valueOf(PointScore.LOVE));
-            match.getMatchScore().setPointScorePlayer2(String.valueOf(PointScore.LOVE));
+        } else if (playerTwoId == winnerId) {
+            matchScore.setGameScorePlayer2(match.getMatchScore().getGameScorePlayer2() + 1);
+            matchScore.setDefaultPointScore();
             return match;
         } else {
             // TODO : доделать
@@ -66,23 +35,64 @@ public class ScoreService {
         }
     }
 
-    // TODO : исключить дублирование
     public Match updateSetScore(Match match, int winnerId) {
-        Player player1 = match.getPlayer1Id();
-        Player player2 = match.getPlayer2Id();
-        if (player1.getId() == winnerId) {
-            match.getMatchScore().setSetScorePlayer1(match.getMatchScore().getSetScorePlayer1() + 1);
-            match.getMatchScore().setPointScorePlayer1(String.valueOf(PointScore.LOVE));
-            match.getMatchScore().setPointScorePlayer2(String.valueOf(PointScore.LOVE));
+        MatchScore matchScore = match.getMatchScore();
+        int playerOneId = match.getPlayer1Id().getId();
+        int playerTwoId = match.getPlayer2Id().getId();
+
+        if (playerOneId == winnerId) {
+            matchScore.setSetScorePlayer1(match.getMatchScore().getSetScorePlayer1() + 1);
+            matchScore.setDefaultPointScore();
             return match;
-        } else if (player2.getId() == winnerId) {
-            match.getMatchScore().setSetScorePlayer2(match.getMatchScore().getSetScorePlayer2() + 1);
-            match.getMatchScore().setPointScorePlayer1(String.valueOf(PointScore.LOVE));
-            match.getMatchScore().setPointScorePlayer2(String.valueOf(PointScore.LOVE));
+        } else if (playerTwoId == winnerId) {
+            matchScore.setSetScorePlayer2(match.getMatchScore().getSetScorePlayer2() + 1);
+            matchScore.setDefaultPointScore();
             return match;
         } else {
             // TODO : доделать
             throw new IllegalArgumentException("Ошибка");
         }
     }
+
+    private void updateNormalScore(Match match, int winnerId) {
+        MatchScore matchScore = match.getMatchScore();
+        int playerOneId = match.getPlayer1Id().getId();
+        int playerTwoId = match.getPlayer2Id().getId();
+        String pointScorePlayerOne = match.getMatchScore().getPointScorePlayer1();
+        String pointScorePlayerTwo = match.getMatchScore().getPointScorePlayer2();
+
+        if (playerOneId == winnerId) {
+            String updatedPointScore = PointScore.getNextGameScore(PointScore.getPointScoreFromString(pointScorePlayerOne));
+            matchScore.setPointScorePlayer1(updatedPointScore);
+        } else if (playerTwoId == winnerId) {
+            String updatedPointScore = PointScore.getNextGameScore(PointScore.getPointScoreFromString(pointScorePlayerTwo));
+            matchScore.setPointScorePlayer2(updatedPointScore);
+        } else {
+            // TODO : доделать
+            throw new IllegalArgumentException("Ошибка");
+        }
+    }
+
+    private void updateTiebreakScore(Match match, int winnerId) {
+        MatchScore matchScore = match.getMatchScore();
+        int playerOneId = match.getPlayer1Id().getId();
+        int playerTwoId = match.getPlayer2Id().getId();
+        String pointScorePlayerOne = match.getMatchScore().getPointScorePlayer1();
+        String pointScorePlayerTwo = match.getMatchScore().getPointScorePlayer2();
+
+        if (playerOneId == winnerId) {
+            matchScore.setPointScorePlayer1(incrementTiebreakScore(pointScorePlayerOne));
+        } else if (playerTwoId == winnerId) {
+            matchScore.setPointScorePlayer2(incrementTiebreakScore(pointScorePlayerTwo));
+        } else {
+            // TODO : доделать
+            throw new IllegalArgumentException("Ошибка");
+        }
+    }
+
+    private String incrementTiebreakScore(String currentScore) {
+        int score = Integer.parseInt(currentScore);
+        return String.valueOf(score + 1);
+    }
+
 }
