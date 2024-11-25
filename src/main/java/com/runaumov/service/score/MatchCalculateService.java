@@ -6,7 +6,7 @@ import com.runaumov.dto.request.RequestMatchScoreDto;
 import com.runaumov.entity.Match;
 import com.runaumov.entity.Player;
 import com.runaumov.service.status.MatchStatusChecker;
-import com.runaumov.service.tiebreak.TieBreakService;
+import com.runaumov.service.tiebreak.TiebreakService;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -16,7 +16,7 @@ public class MatchCalculateService {
     private static final int SET_POINT_TO_LOOSER = 6;
 
     private ScoreService scoreService;
-    private TieBreakService tieBreakService;
+    private TiebreakService tieBreakService;
     private MatchStatusChecker checker;
 
     public Match updateMatchScore(RequestMatchScoreDto requestMatchScoreDto) {

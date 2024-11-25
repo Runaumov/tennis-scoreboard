@@ -5,7 +5,7 @@ import com.runaumov.service.score.MatchCalculateService;
 import com.runaumov.service.score.ScoreService;
 import com.runaumov.service.status.MatchResultService;
 import com.runaumov.service.status.MatchStatusChecker;
-import com.runaumov.service.tiebreak.TieBreakService;
+import com.runaumov.service.tiebreak.TiebreakService;
 import com.runaumov.storage.MatchStorage;
 import com.runaumov.dto.request.RequestMatchScoreDto;
 import com.runaumov.dto.response.ResponseMatchScoreDto;
@@ -45,7 +45,7 @@ public class MatchScoreServlet extends HttpServlet {
         UUID matchId = UUID.fromString(matchIdParam);
 
         ScoreService scoreService = new ScoreService();
-        TieBreakService tieBreakService = new TieBreakService();
+        TiebreakService tieBreakService = new TiebreakService();
         MatchStatusChecker matchStatusChecker = new MatchStatusChecker();
         MatchResultService matchResultService = new MatchResultService();
 

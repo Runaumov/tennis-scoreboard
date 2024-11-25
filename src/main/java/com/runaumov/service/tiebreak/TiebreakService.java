@@ -4,7 +4,7 @@ import com.runaumov.exception.ModelNotFoundException;
 import com.runaumov.model.MatchType;
 import com.runaumov.model.MatchScore;
 
-public class TieBreakService {
+public class TiebreakService {
 
     private static final int TIEBREAK_START_SCORE = 6;
     private static final int MIN_WIN_GAMES_FOR_TIEBREAK = 6;
