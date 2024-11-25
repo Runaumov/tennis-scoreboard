@@ -1,6 +1,6 @@
 package com.runaumov.service.managment;
 
-
+import com.runaumov.exception.ModelNotFoundException;
 import com.runaumov.model.MatchType;
 import com.runaumov.model.PointScore;
 import com.runaumov.storage.MatchStorage;
@@ -16,34 +16,46 @@ public class NewMatchService {
     private final PlayerDao playerDao = new PlayerDao();
 
     public UUID initMatch(RequestNewMatchDto requestNewMatchDto) {
-        Player player1 = getPlayer(requestNewMatchDto.getPlayer1Name());
-        Player player2 = getPlayer(requestNewMatchDto.getPlayer2Name());
+        Player playerOne = getOrAddPlayer(requestNewMatchDto.getPlayer1Name());
+        Player playerTwo = getOrAddPlayer(requestNewMatchDto.getPlayer2Name());
 
-        // TODO: рассмотреть варик создания отдельного метода
-        MatchScore matchScore = MatchScore.builder()
+        MatchScore matchScore = createDefaultMatchScore();
+        Match match = createDefaultMatch(playerOne, playerTwo, matchScore);
+
+        UUID matchId = UUID.randomUUID();
+        MatchStorage.getInstance().addMatch(matchId, match);
+
+        return matchId;
+    }
+
+    private MatchScore createDefaultMatchScore() {
+        return MatchScore.builder()
                 .pointScorePlayer1(PointScore.LOVE.name())
                 .pointScorePlayer2(PointScore.LOVE.name())
                 .matchType(MatchType.NORMAL)
                 .build();
-
-        Match match = Match.builder()
-                .player1Id(player1)
-                .player2Id(player2)
-                .matchScore(matchScore)
-                .build();
-
-        UUID matchId = UUID.randomUUID();
-        MatchStorage.getInstance().addMatch(matchId, match);
-        return matchId;
     }
 
-    // TODO: подумать над player.get(), т.к. он не только возвращает игрока, но и добавляет его
-    private Player getPlayer(String playerName) {
+    private Match createDefaultMatch(Player playerOne, Player playerTwo, MatchScore matchScore) {
+        return Match.builder()
+                .player1Id(playerOne)
+                .player2Id(playerTwo)
+                .matchScore(matchScore)
+                .build();
+    }
+
+    private Player getOrAddPlayer(String playerName) {
         if (!isPlayerExist(playerName)) {
             addPlayerInDatabase(playerName);
         }
         Optional<Player> player = playerDao.findByName(playerName);
-        return player.get();
+
+        if (player.isPresent()) {
+            return player.get();
+        } else {
+            throw new ModelNotFoundException(String.format(
+                    "Player '%s' cannot be returned in database", playerName));
+        }
     }
 
     private void addPlayerInDatabase(String playerName) {
@@ -57,5 +69,4 @@ public class NewMatchService {
         Optional<Player> player = playerDao.findByName(playerName);
         return player.isPresent();
     }
-
 }
