@@ -14,8 +14,9 @@ public class ScoreService {
         } else {
             updateNormalScore(match, winnerId);
         }
+
         return match;
-        }
+    }
 
     public Match updateGameScore(Match match, int winnerId) {
         MatchScore matchScore = match.getMatchScore();

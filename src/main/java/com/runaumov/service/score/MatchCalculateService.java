@@ -21,8 +21,9 @@ public class MatchCalculateService {
 
     public Match updateMatchScore(RequestMatchScoreDto requestMatchScoreDto) {
         Match currentMatch = requestMatchScoreDto.getMatch();
-        MatchScore currentMatchScore = currentMatch.getMatchScore();
         int winnerId = requestMatchScoreDto.getPlayerId();
+
+        MatchScore currentMatchScore = currentMatch.getMatchScore();
         Match updatedMatch = scoreService.updatePointScore(currentMatch, winnerId);
 
         // TODO : реализовать
@@ -34,27 +35,28 @@ public class MatchCalculateService {
             return scoreService.updateGameScore(currentMatch, winnerId);
         }
 
+        tieBreakService.checkForTiebreak(currentMatchScore);
+
         if (checker.isSetWin(currentMatch)) {
             currentMatchScore.setDefaultGameScore();
             return scoreService.updateSetScore(currentMatch, winnerId);
         }
 
-        if (tieBreakService.isTiebreakWon(currentMatchScore)) {
-            Player player1 = currentMatch.getPlayer1Id();
-            Player player2 = currentMatch.getPlayer2Id();
+//        if (tieBreakService.isTiebreakWon(currentMatchScore)) {
+//            Player player1 = currentMatch.getPlayer1Id();
+//            Player player2 = currentMatch.getPlayer2Id();
+//
+//            // TODO : реализовать
+////            if (player1.getId() == winnerId) {
+////                currentMatchScore.addPreviousSet(SET_POINT_TO_WINNER, SET_POINT_TO_LOOSER);
+////            } else if (player2.getId() == winnerId){
+////                currentMatchScore.addPreviousSet(SET_POINT_TO_LOOSER, SET_POINT_TO_WINNER);
+////            }
+//            currentMatchScore.setDefaultPointScore();
+//            currentMatchScore.setDefaultGameScore();
+//            currentMatchScore.setMatchType(MatchType.NORMAL);
+//        }
 
-            // TODO : реализовать
-//            if (player1.getId() == winnerId) {
-//                currentMatchScore.addPreviousSet(SET_POINT_TO_WINNER, SET_POINT_TO_LOOSER);
-//            } else if (player2.getId() == winnerId){
-//                currentMatchScore.addPreviousSet(SET_POINT_TO_LOOSER, SET_POINT_TO_WINNER);
-//            }
-            currentMatchScore.setDefaultPointScore();
-            currentMatchScore.setDefaultGameScore();
-            currentMatchScore.setMatchType(MatchType.NORMAL);
-        }
-
-        tieBreakService.checkForTiebreak(currentMatchScore);
         return updatedMatch;
     }
 

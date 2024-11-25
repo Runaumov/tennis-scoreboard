@@ -8,7 +8,6 @@ import java.util.List;
 public class MatchSearchService {
     MatchDao matchDao = new MatchDao();
 
-
     public List<Match> getMatches(RequestMatchesDto requestMatchesDto, int pageNum, int pageSize) {
         int offset = (pageNum - 1) * pageSize;
         String playerName = requestMatchesDto.getName();
