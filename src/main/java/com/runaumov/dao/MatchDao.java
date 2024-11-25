@@ -69,6 +69,15 @@ public class MatchDao {
         }
     }
 
+    public boolean existsById (int id) {
+        @Cleanup Session session = sessionFactory.openSession();
+
+        Long count = session.createQuery("SELECT COUNT(m) FROM Match m WHERE m.id = :id", Long.class)
+                .setParameter("id", id)
+                .uniqueResult();
+        return count > 0;
+    }
+
     public long countByName(String playerName) {
         @Cleanup Session session = sessionFactory.openSession();
 
