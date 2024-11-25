@@ -43,7 +43,7 @@ public class MatchesServlet extends HttpServlet {
 
         RequestMatchesDto requestMatchesDto = new RequestMatchesDto(playerName, pageNum);
 
-        List<Match> matches = matchesService.getPlayers(requestMatchesDto, pageNum, pageSize);
+        List<Match> matches = matchesService.getMatches(requestMatchesDto, pageNum, pageSize);
 
         List<ResponseMatchesDto> responseMatchesDto = new ArrayList<>();
         for (Match match : matches) {

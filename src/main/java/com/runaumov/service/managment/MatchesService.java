@@ -8,32 +8,25 @@ import java.util.List;
 public class MatchesService {
     MatchDao matchDao = new MatchDao();
 
-    // TODO: подумать над названием метода
-    public List<Match> getPlayers(RequestMatchesDto requestMatchesDto, int pageNum, int pageSize) {
 
-        List<Match> players;
+    public List<Match> getMatches(RequestMatchesDto requestMatchesDto, int pageNum, int pageSize) {
         int offset = (pageNum - 1) * pageSize;
-        String name = requestMatchesDto.getName();
+        String playerName = requestMatchesDto.getName();
 
-        // TODO : второе условие - костыль
-        if (name != null && !name.equals("")) {
-            players = matchDao.findMatchByPlayerName(name, offset, pageSize);
-        } else {
-            players = matchDao.findAllWithPagination(offset, pageSize);
-        }
-
-        return players;
+        return (playerName != null && !playerName.isBlank())
+                ? matchDao.findMatchByPlayerName(playerName, offset, pageSize)
+                : matchDao.findAllWithPagination(offset, pageSize);
     }
 
     public int getTotalPages(int pageSize, String playerName) {
-        long totalCount;
+        long totalCount = (playerName != null && !playerName.isBlank())
+                ? matchDao.countByName(playerName)
+                : matchDao.countAll();
 
-        if (playerName != null) {
-            totalCount = matchDao.countByName(playerName);
-        } else {
-            totalCount = matchDao.countAll();
-        }
+        return calculateTotalPages(totalCount, pageSize);
+    }
 
+    private int calculateTotalPages(long totalCount, int pageSize) {
         return (int) Math.ceil((double) totalCount / pageSize);
     }
 
