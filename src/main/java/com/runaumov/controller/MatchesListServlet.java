@@ -31,8 +31,7 @@ public class MatchesListServlet extends HttpServlet {
         String page = req.getParameter("page");
         String playerName = req.getParameter("filter-input");
 
-        // TODO: потом вынести в отдельный класс-валидатор
-        int pageNum = (page != null) ? Integer.parseInt(page) : 1;
+        int pageNum = getPageNumber(page);
 
         RequestMatchesDto requestMatchesDto = new RequestMatchesDto(playerName, pageNum);
 
@@ -48,6 +47,14 @@ public class MatchesListServlet extends HttpServlet {
         req.setAttribute("totalPages", totalPages);
 
         req.getRequestDispatcher("/matches.jsp").forward(req, resp);
+    }
+
+    private int getPageNumber(String page) {
+        try {
+            return (page != null) ? Math.max(Integer.parseInt(page), 1) : 1;
+        } catch (NumberFormatException e) {
+            return 1;
+        }
     }
 }
 
