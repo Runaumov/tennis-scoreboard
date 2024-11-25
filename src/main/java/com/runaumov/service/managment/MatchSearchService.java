@@ -5,7 +5,7 @@ import com.runaumov.dto.request.RequestMatchesDto;
 import com.runaumov.entity.Match;
 import java.util.List;
 
-public class MatchesService {
+public class MatchSearchService {
     MatchDao matchDao = new MatchDao();
 
 
