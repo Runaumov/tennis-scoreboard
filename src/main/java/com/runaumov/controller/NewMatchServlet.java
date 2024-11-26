@@ -2,7 +2,7 @@ package com.runaumov.controller;
 
 import com.runaumov.dto.request.RequestNewMatchDto;
 import com.runaumov.service.managment.NewMatchService;
-import jakarta.servlet.ServletException;
+import com.runaumov.validator.RequestValidator;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,13 +17,13 @@ public class NewMatchServlet extends HttpServlet {
     private static final String MATCH_SCORE_PATH = "/match-score?uuid=";
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String palyer1Name = req.getParameter("playerOne");
-        String palyer2Name = req.getParameter("playerTwo");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String playerOneName = req.getParameter("playerOne");
+        String playerTwoName = req.getParameter("playerTwo");
 
-        //TODO: реализовать валидацию входных данных
+        RequestNewMatchDto requestNewMatchDto = new RequestNewMatchDto(playerOneName, playerTwoName);
+        RequestValidator.validateRequestNewMatchDto(requestNewMatchDto);
 
-        RequestNewMatchDto requestNewMatchDto = new RequestNewMatchDto(palyer1Name, palyer2Name);
         NewMatchService newMatchService = new NewMatchService();
         UUID matchId = newMatchService.initMatch(requestNewMatchDto);
 

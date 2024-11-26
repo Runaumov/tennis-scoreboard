@@ -37,7 +37,6 @@ public class MatchScoreServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO: переименовать playerIdReqP
         String playerName = req.getParameter("winnerId");
         int playerId = Integer.parseInt(playerName);
         String matchId = req.getParameter("uuid");
