@@ -26,4 +26,9 @@ public class MatchScore {
         this.gameScorePlayer2 = 0;
     }
 
+    public void updateSetScoreForPlayers(int gameScorePlayer1, int gameScorePlayer2) {
+        this.gameScorePlayer1 = gameScorePlayer1;
+        this.gameScorePlayer2 = gameScorePlayer2;
+    }
+
 }

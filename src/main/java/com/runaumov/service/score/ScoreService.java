@@ -1,5 +1,6 @@
 package com.runaumov.service.score;
 
+import com.runaumov.entity.Player;
 import com.runaumov.exception.ScoreUpdateException;
 import com.runaumov.model.MatchScore;
 import com.runaumov.model.MatchType;
@@ -7,6 +8,8 @@ import com.runaumov.model.PointScore;
 import com.runaumov.entity.Match;
 
 public class ScoreService {
+    private static final int SET_POINT_TO_WINNER = 7;
+    private static final int SET_POINT_TO_LOOSER = 6;
 
     public Match updatePointScore(Match match, int winnerId) {
         if (match.getMatchScore().getMatchType().equals(MatchType.TIEBREAK)) {
@@ -54,6 +57,22 @@ public class ScoreService {
             throw new ScoreUpdateException(
                     String.format("Player ID '%s' does not match any player in the match.", winnerId));
         }
+    }
+
+    public void updateSetScoreForTiebreak(Match match, int winnerId) {
+        MatchScore matchScore = match.getMatchScore();
+        int playerOneId = match.getPlayer1Id().getId();
+        int playerTwoId = match.getPlayer2Id().getId();
+
+        if (playerOneId == winnerId) {
+            matchScore.updateSetScoreForPlayers(SET_POINT_TO_WINNER, SET_POINT_TO_LOOSER);
+        } else if (playerTwoId == winnerId){
+            matchScore.updateSetScoreForPlayers(SET_POINT_TO_LOOSER, SET_POINT_TO_WINNER);
+        }
+
+        matchScore.setDefaultPointScore();
+        matchScore.setDefaultGameScore();
+        matchScore.setMatchType(MatchType.NORMAL);
     }
 
     private void updateNormalScore(Match match, int winnerId) {
