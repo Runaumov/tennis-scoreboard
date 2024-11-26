@@ -28,6 +28,5 @@ public class NewMatchServlet extends HttpServlet {
         UUID matchId = newMatchService.initMatch(requestNewMatchDto);
 
         resp.sendRedirect(req.getContextPath() + MATCH_SCORE_PATH + matchId);
-
     }
 }
