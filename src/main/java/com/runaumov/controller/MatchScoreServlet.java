@@ -35,28 +35,27 @@ public class MatchScoreServlet extends HttpServlet {
         req.getRequestDispatcher("match-score.jsp").forward(req, resp);
     }
 
-    // TODO: написать
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // TODO: переименовать playerIdReqP
-        String playerNameReqP = req.getParameter("winnerId");
-        int playerId = Integer.parseInt(playerNameReqP);
-        String matchIdParam = req.getParameter("uuid");
-        UUID matchId = UUID.fromString(matchIdParam);
+        String playerName = req.getParameter("winnerId");
+        int playerId = Integer.parseInt(playerName);
+        String matchId = req.getParameter("uuid");
+        UUID uuid = UUID.fromString(matchId);
 
         ScoreService scoreService = new ScoreService();
         TiebreakService tieBreakService = new TiebreakService();
         MatchStatusChecker matchStatusChecker = new MatchStatusChecker();
         MatchResultService matchResultService = new MatchResultService();
 
-        Match currentMatch = MatchStorage.getInstance().getMatchById(matchId);
+        Match currentMatch = MatchStorage.getInstance().getMatchById(uuid);
         RequestMatchScoreDto requestMatchScoreDto = new RequestMatchScoreDto(currentMatch, playerId);
 
         MatchCalculateService matchCalculateService = new MatchCalculateService(
                 scoreService, tieBreakService, matchStatusChecker);
         Match updatedMatch = matchCalculateService.updateMatchScore(requestMatchScoreDto);
 
-        ResponseMatchScoreDto responseMatchScoreDto = new ResponseMatchScoreDto(updatedMatch, matchId);
+        ResponseMatchScoreDto responseMatchScoreDto = new ResponseMatchScoreDto(updatedMatch, uuid);
 
         if (matchStatusChecker.isMatchWin(updatedMatch)) {
             Player winner = matchResultService.getWinner(updatedMatch);
