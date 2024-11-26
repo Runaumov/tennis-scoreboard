@@ -59,20 +59,15 @@ public class ScoreService {
         }
     }
 
-    public void updateSetScoreForTiebreak(Match match, int winnerId) {
+    public Match updateSetScoreForTiebreak(Match match, int winnerId) {
         MatchScore matchScore = match.getMatchScore();
-        int playerOneId = match.getPlayer1Id().getId();
-        int playerTwoId = match.getPlayer2Id().getId();
-
-        if (playerOneId == winnerId) {
-            matchScore.updateSetScoreForPlayers(SET_POINT_TO_WINNER, SET_POINT_TO_LOOSER);
-        } else if (playerTwoId == winnerId){
-            matchScore.updateSetScoreForPlayers(SET_POINT_TO_LOOSER, SET_POINT_TO_WINNER);
-        }
+        updateSetScore(match, winnerId);
 
         matchScore.setDefaultPointScore();
         matchScore.setDefaultGameScore();
         matchScore.setMatchType(MatchType.NORMAL);
+
+        return match;
     }
 
     private void updateNormalScore(Match match, int winnerId) {

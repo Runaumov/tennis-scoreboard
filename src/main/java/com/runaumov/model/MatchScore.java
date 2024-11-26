@@ -21,6 +21,11 @@ public class MatchScore {
         this.pointScorePlayer2 = String.valueOf(PointScore.LOVE);
     }
 
+    public void setDefaultPointScoreForTiebreak() {
+        this.pointScorePlayer1 = "0";
+        this.pointScorePlayer2 = "0";
+    }
+
     public void setDefaultGameScore() {
         this.gameScorePlayer1 = 0;
         this.gameScorePlayer2 = 0;

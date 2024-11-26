@@ -24,15 +24,11 @@ public class TiebreakService {
     }
 
     public void startTiebreak(MatchScore matchScore) {
-        matchScore.setDefaultPointScore();
+        matchScore.setDefaultPointScoreForTiebreak();
         matchScore.setMatchType(MatchType.TIEBREAK);
     }
 
     public boolean isTiebreakWon(MatchScore matchScore) {
-        if (matchScore.getMatchType().equals(MatchType.TIEBREAK)) {
-            return false;
-        }
-
         int pointScorePlayerOne = Integer.parseInt(matchScore.getPointScorePlayer1());
         int pointScorePlayerTwo = Integer.parseInt(matchScore.getPointScorePlayer2());
         int gameDifference = Math.abs(pointScorePlayerOne - pointScorePlayerTwo);

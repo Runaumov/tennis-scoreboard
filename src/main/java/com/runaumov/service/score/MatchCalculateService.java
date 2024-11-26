@@ -17,8 +17,8 @@ public class MatchCalculateService {
     public Match updateMatchScore(RequestMatchScoreDto requestMatchScoreDto) {
         Match currentMatch = requestMatchScoreDto.getMatch();
         int winnerId = requestMatchScoreDto.getPlayerId();
-
         MatchScore currentMatchScore = currentMatch.getMatchScore();
+
         Match updatedMatch = scoreService.updatePointScore(currentMatch, winnerId);
 
         // TODO : реализовать
@@ -27,24 +27,22 @@ public class MatchCalculateService {
         }
 
         if (checker.isGameWin(currentMatch)) {
-            return scoreService.updateGameScore(currentMatch, winnerId);
+            updatedMatch = scoreService.updateGameScore(currentMatch, winnerId);
         }
 
         if (!tieBreakService.getTiebreakStatus(currentMatchScore) && tieBreakService.checkForStartTiebreak(currentMatchScore)) {
             tieBreakService.startTiebreak(currentMatchScore);
-            scoreService.updatePointScore(currentMatch, winnerId);
         }
 
         if (tieBreakService.getTiebreakStatus(currentMatchScore) && tieBreakService.isTiebreakWon(currentMatchScore)) {
-            scoreService.updateSetScoreForTiebreak(currentMatch, winnerId);
+            updatedMatch = scoreService.updateSetScoreForTiebreak(currentMatch, winnerId);
         }
 
         if (checker.isSetWin(currentMatch)) {
             currentMatchScore.setDefaultGameScore();
-            return scoreService.updateSetScore(currentMatch, winnerId);
+            updatedMatch = scoreService.updateSetScore(currentMatch, winnerId);
         }
 
         return updatedMatch;
     }
-
 }
