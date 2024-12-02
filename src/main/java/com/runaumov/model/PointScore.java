@@ -1,16 +1,30 @@
 package com.runaumov.model;
 
-public enum PointScore {
-    LOVE, FIFTEEN, THIRTY, FORTY, WIN;
+import com.runaumov.exception.ScoreUpdateException;
 
-    public static String getNextGameScore(PointScore currentPointScore) {
-        PointScore[] values = PointScore.values();
-        int index = currentPointScore.ordinal();
-        if (index < values.length - 1) {
-            return values[index + 1].name();
+public enum PointScore {
+    LOVE, FIFTEEN, THIRTY, FORTY, AD, WIN;
+
+    public static String getNextGameScore(PointScore currentPointScore, GameType gameType) {
+        if (gameType.equals(GameType.NORMAL)) {
+            return switch (currentPointScore) {
+                case LOVE -> FIFTEEN.name();
+                case FIFTEEN -> THIRTY.name();
+                case THIRTY -> FORTY.name();
+                case FORTY -> WIN.name();
+                default -> throw new ScoreUpdateException("Invalid state for normal game.");
+            };
         }
-        return values[0].name();
+        if (gameType.equals(GameType.DEUCE)) {
+            return switch (currentPointScore) {
+                case FORTY -> AD.name();
+                case AD -> WIN.name();
+                default -> throw new ScoreUpdateException("Invalid state for deuce game.");
+            };
+        }
+        throw new ScoreUpdateException("Error for update gameScore");
     }
+
 
     public static PointScore getPointScoreFromString(String string) {
         try {

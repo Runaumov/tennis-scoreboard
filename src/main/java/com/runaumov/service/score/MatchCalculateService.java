@@ -3,6 +3,7 @@ package com.runaumov.service.score;
 import com.runaumov.model.MatchScore;
 import com.runaumov.dto.request.RequestMatchScoreDto;
 import com.runaumov.entity.Match;
+import com.runaumov.service.deuce.DeuceService;
 import com.runaumov.service.status.MatchStatusChecker;
 import com.runaumov.service.tiebreak.TiebreakService;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ public class MatchCalculateService {
     private ScoreService scoreService;
     private TiebreakService tieBreakService;
     private MatchStatusChecker checker;
+    private DeuceService deuceService;
 
     public Match updateMatchScore(RequestMatchScoreDto requestMatchScoreDto) {
         Match currentMatch = requestMatchScoreDto.getMatch();
@@ -21,9 +23,12 @@ public class MatchCalculateService {
 
         Match updatedMatch = scoreService.updatePointScore(currentMatch, winnerId);
 
-        // TODO : реализовать
-        if (checker.isDeuce()) {
-            // логика для 40:40
+        if (checker.isAdvantage(currentMatch)) {
+            updatedMatch.getMatchScore().setFortyPointScore();
+        }
+
+        if (!deuceService.isDeuceGameType(currentMatchScore) && checker.isDeuce(currentMatch)) {
+            deuceService.startDeuce(currentMatchScore);
         }
 
         if (checker.isGameWin(currentMatch)) {

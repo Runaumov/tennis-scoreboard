@@ -10,8 +10,20 @@ public class MatchStatusChecker {
     private static final int WINNING_SET_COUNT = 2;
 
     // TODO : реализовать
-    public boolean isDeuce() { // 40:40
-        return false;
+    public boolean isDeuce(Match match) { // 40:40
+        String pointScoreForPlayerOne = match.getMatchScore().getPointScorePlayer1();
+        String pointScoreForPlayerTwo = match.getMatchScore().getPointScorePlayer2();
+
+        return (pointScoreForPlayerOne.toUpperCase().equals(PointScore.FORTY.name()) &&
+                pointScoreForPlayerTwo.toUpperCase().equals(PointScore.FORTY.name()));
+    }
+
+    public boolean isAdvantage(Match match) { // AD:AD
+        String pointScoreForPlayerOne = match.getMatchScore().getPointScorePlayer1();
+        String pointScoreForPlayerTwo = match.getMatchScore().getPointScorePlayer2();
+
+        return (pointScoreForPlayerOne.toUpperCase().equals(PointScore.AD.name()) &&
+                pointScoreForPlayerTwo.toUpperCase().equals(PointScore.AD.name()));
     }
 
     public boolean isGameWin(Match match) {

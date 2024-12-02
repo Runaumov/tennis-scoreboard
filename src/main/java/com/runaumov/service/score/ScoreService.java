@@ -2,6 +2,7 @@ package com.runaumov.service.score;
 
 import com.runaumov.entity.Player;
 import com.runaumov.exception.ScoreUpdateException;
+import com.runaumov.model.GameType;
 import com.runaumov.model.MatchScore;
 import com.runaumov.model.MatchType;
 import com.runaumov.model.PointScore;
@@ -12,19 +13,26 @@ public class ScoreService {
     private static final int SET_POINT_TO_LOOSER = 6;
 
     public Match updatePointScore(Match match, int winnerId) {
-        if (match.getMatchScore().getMatchType().equals(MatchType.TIEBREAK)) {
+        MatchType matchType = match.getMatchScore().getMatchType();
+        GameType gameType = match.getMatchScore().getGameType();
+
+        if (matchType.equals(MatchType.TIEBREAK)) {
             updateTiebreakScore(match, winnerId);
         } else {
-            updateNormalScore(match, winnerId);
+            updateNormalScore(match, winnerId, gameType);
         }
-
         return match;
     }
 
     public Match updateGameScore(Match match, int winnerId) {
         MatchScore matchScore = match.getMatchScore();
+        GameType gameType = matchScore.getGameType();
         int playerOneId = match.getPlayer1Id().getId();
         int playerTwoId = match.getPlayer2Id().getId();
+
+        if (gameType.equals(GameType.DEUCE)) {
+            matchScore.setGameType(GameType.NORMAL);
+        }
 
         if (playerOneId == winnerId) {
             matchScore.setGameScorePlayer1(match.getMatchScore().getGameScorePlayer1() + 1);
@@ -70,7 +78,7 @@ public class ScoreService {
         return match;
     }
 
-    private void updateNormalScore(Match match, int winnerId) {
+    private void updateNormalScore(Match match, int winnerId, GameType gameType) {
         MatchScore matchScore = match.getMatchScore();
         int playerOneId = match.getPlayer1Id().getId();
         int playerTwoId = match.getPlayer2Id().getId();
@@ -78,10 +86,10 @@ public class ScoreService {
         String pointScorePlayerTwo = match.getMatchScore().getPointScorePlayer2();
 
         if (playerOneId == winnerId) {
-            String updatedPointScore = PointScore.getNextGameScore(PointScore.getPointScoreFromString(pointScorePlayerOne));
+            String updatedPointScore = PointScore.getNextGameScore(PointScore.getPointScoreFromString(pointScorePlayerOne), gameType);
             matchScore.setPointScorePlayer1(updatedPointScore);
         } else if (playerTwoId == winnerId) {
-            String updatedPointScore = PointScore.getNextGameScore(PointScore.getPointScoreFromString(pointScorePlayerTwo));
+            String updatedPointScore = PointScore.getNextGameScore(PointScore.getPointScoreFromString(pointScorePlayerTwo), gameType);
             matchScore.setPointScorePlayer2(updatedPointScore);
         } else {
             throw new ScoreUpdateException(

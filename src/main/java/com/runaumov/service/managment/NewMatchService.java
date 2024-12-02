@@ -1,6 +1,7 @@
 package com.runaumov.service.managment;
 
 import com.runaumov.exception.ModelNotFoundException;
+import com.runaumov.model.GameType;
 import com.runaumov.model.MatchType;
 import com.runaumov.model.PointScore;
 import com.runaumov.storage.MatchStorage;
@@ -32,6 +33,7 @@ public class NewMatchService {
         return MatchScore.builder()
                 .pointScorePlayer1(PointScore.LOVE.name())
                 .pointScorePlayer2(PointScore.LOVE.name())
+                .gameType(GameType.NORMAL)
                 .matchType(MatchType.NORMAL)
                 .build();
     }

@@ -15,10 +15,16 @@ public class MatchScore {
     private int setScorePlayer1;
     private int setScorePlayer2;
     private MatchType matchType;
+    private GameType gameType;
 
     public void setDefaultPointScore() {
         this.pointScorePlayer1 = String.valueOf(PointScore.LOVE);
         this.pointScorePlayer2 = String.valueOf(PointScore.LOVE);
+    }
+
+    public void setFortyPointScore() {
+        this.pointScorePlayer1 = String.valueOf(PointScore.FORTY);
+        this.pointScorePlayer2 = String.valueOf(PointScore.FORTY);
     }
 
     public void setDefaultPointScoreForTiebreak() {

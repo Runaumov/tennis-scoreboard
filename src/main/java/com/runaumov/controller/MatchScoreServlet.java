@@ -1,5 +1,6 @@
 package com.runaumov.controller;
 
+import com.runaumov.service.deuce.DeuceService;
 import com.runaumov.service.managment.MatchRecordService;
 import com.runaumov.service.score.MatchCalculateService;
 import com.runaumov.service.score.ScoreService;
@@ -46,12 +47,13 @@ public class MatchScoreServlet extends HttpServlet {
         TiebreakService tieBreakService = new TiebreakService();
         MatchStatusChecker matchStatusChecker = new MatchStatusChecker();
         MatchResultService matchResultService = new MatchResultService();
+        DeuceService deuceService = new DeuceService();
 
         Match currentMatch = MatchStorage.getInstance().getMatchById(uuid);
         RequestMatchScoreDto requestMatchScoreDto = new RequestMatchScoreDto(currentMatch, playerId);
 
         MatchCalculateService matchCalculateService = new MatchCalculateService(
-                scoreService, tieBreakService, matchStatusChecker);
+                scoreService, tieBreakService, matchStatusChecker, deuceService);
         Match updatedMatch = matchCalculateService.updateMatchScore(requestMatchScoreDto);
 
         ResponseMatchScoreDto responseMatchScoreDto = new ResponseMatchScoreDto(updatedMatch, uuid);
